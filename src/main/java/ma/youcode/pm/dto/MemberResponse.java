@@ -1,32 +1,29 @@
-package ma.youcode.pm.model;
+package ma.youcode.pm.dto;
 
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ma.youcode.pm.enums.IdentityDocumentType;
+import ma.youcode.pm.model.Competition;
+import ma.youcode.pm.model.Hunting;
+import ma.youcode.pm.model.Ranking;
 
 import java.util.Date;
 import java.util.List;
 
+@Builder
 @Data
-@Entity
-@Table(name = "members")
-public class Member {
-    @Id
+@NoArgsConstructor
+@AllArgsConstructor
+public class MemberResponse {
     private String num;
     private String name;
     private String familyName;
     private Date accessionDate;
     private String nationality;
-
-    @Enumerated(EnumType.STRING)
     private IdentityDocumentType identityDocument;
-
-    @OneToMany(mappedBy = "member")
     private List<Ranking> rankings;
-
-    @ManyToMany(mappedBy = "members")
     private List<Competition> competitions;
-
-    @OneToMany(mappedBy = "member")
     private List<Hunting> huntings;
 }

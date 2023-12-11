@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "levels")
 public class Level {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

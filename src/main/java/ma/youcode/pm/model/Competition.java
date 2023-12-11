@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "competitions")
 public class Competition {
     @Id
     private String code;
