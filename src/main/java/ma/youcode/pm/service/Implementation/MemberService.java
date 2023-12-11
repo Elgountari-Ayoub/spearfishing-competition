@@ -31,6 +31,13 @@ public class MemberService implements IMemberService {
         return members.map(this::mapToResponse);
     }
 
+    @Override
+    public MemberResponse save(MemberRequest memberRequest) {
+        Member member = mapToEntity(memberRequest);
+        memberRepository.save(member);
+        return mapToResponse(member);
+    }
+
 
     public MemberResponse mapToResponse(Member member) {
         MemberResponse response = new MemberResponse();
@@ -45,6 +52,7 @@ public class MemberService implements IMemberService {
 
     public static Member mapToEntity(MemberRequest memberRequest) {
         Member member = new Member();
+        member.setNum(memberRequest.getNum());
         member.setName(memberRequest.getName());
         member.setFamilyName(memberRequest.getFamilyName());
         member.setAccessionDate(memberRequest.getAccessionDate());
