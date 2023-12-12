@@ -1,4 +1,4 @@
-package ma.youcode.pm.dto;
+package ma.youcode.pm.dto.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,5 +1,6 @@
 package ma.youcode.pm.model;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,10 +16,11 @@ import java.util.List;
 @Table(name = "members")
 public class Member {
     @Id
-//    @NotBlank(message = "num must not be blank")
+    private String num;
+    //    @NotBlank(message = "num must not be blank")
 //    @NotNull(message = "num must not be null")
 //    @NotEmpty(message = "num must not be empty")
-    private String num;
+//    @Column(name = "name", nullable = false)
     private String name;
     private String familyName;
     private Date accessionDate;
@@ -26,13 +28,4 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private IdentityDocumentType identityDocument;
-
-    @OneToMany(mappedBy = "member")
-    private List<Ranking> rankings;
-
-    @ManyToMany(mappedBy = "members")
-    private List<Competition> competitions;
-
-    @OneToMany(mappedBy = "member")
-    private List<Hunting> huntings;
 }

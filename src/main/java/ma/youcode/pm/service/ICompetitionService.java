@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
-public interface IMemberService {
-    Optional<MemberResponse> finByNum(String num);
+public interface ICompetitionService {
+    Optional<MemberResponse> finByCode(String num);
     Page<MemberResponse> finAll(Pageable pageable);
     ResponseEntity save(MemberRequest memberRequest);
     ResponseEntity update(MemberRequest memberRequest);

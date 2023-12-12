@@ -1,7 +1,7 @@
 package ma.youcode.pm.service.Implementation;
 
-import ma.youcode.pm.dto.MemberRequest;
-import ma.youcode.pm.dto.MemberResponse;
+import ma.youcode.pm.dto.member.MemberRequest;
+import ma.youcode.pm.dto.member.MemberResponse;
 import ma.youcode.pm.model.Member;
 import ma.youcode.pm.repository.IMemberRepository;
 import ma.youcode.pm.service.IMemberService;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -62,6 +61,10 @@ public class MemberService implements IMemberService {
         response.setAccessionDate(member.getAccessionDate());
         response.setNationality(member.getNationality());
         response.setIdentityDocument(member.getIdentityDocument());
+
+//        response.setRankings(member.getRankings());
+//        response.setCompetitions(member.getCompetitions());
+//        response.setHuntings(member.getHuntings());
         return response;
     }
 
@@ -73,6 +76,11 @@ public class MemberService implements IMemberService {
         member.setAccessionDate(memberRequest.getAccessionDate());
         member.setNationality(memberRequest.getNationality());
         member.setIdentityDocument(memberRequest.getIdentityDocument());
+
+//        member.setRankings(memberRequest.getRankings());
+//        member.setCompetitions(memberRequest.getCompetitions());
+//        member.setHuntings(memberRequest.getHuntings());
+
         return member;
     }
 }

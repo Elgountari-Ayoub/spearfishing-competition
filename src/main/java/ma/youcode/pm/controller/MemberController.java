@@ -1,22 +1,17 @@
 package ma.youcode.pm.controller;
 
-import ma.youcode.pm.dto.MemberRequest;
-import ma.youcode.pm.dto.MemberResponse;
-import ma.youcode.pm.model.Member;
+import ma.youcode.pm.dto.member.MemberRequest;
+import ma.youcode.pm.dto.member.MemberResponse;
 import ma.youcode.pm.service.Implementation.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
 @RestController
-//@RequestMapping("/members")
 public class MemberController extends ApiConfiguration {
 
     MemberService memberService;
@@ -39,19 +34,19 @@ public class MemberController extends ApiConfiguration {
 
     //ToDo Member Registration/Creation
     @PostMapping(value = "/members")
-    public ResponseEntity save(@RequestBody MemberRequest memberRequest) {
+    public ResponseEntity<?> save(@RequestBody MemberRequest memberRequest) {
         return memberService.save(memberRequest);
     }
 
-
     //ToDo Update Member
     @PutMapping(value = "/members")
-    public ResponseEntity update(@RequestBody MemberRequest memberRequest) {
+    public ResponseEntity<?> update(@RequestBody MemberRequest memberRequest) {
         return memberService.update(memberRequest);
     }
+
     //ToDo Delete Member
     @DeleteMapping(value = "/members")
-    public ResponseEntity delete(@RequestBody MemberRequest memberRequest){
+    public ResponseEntity<?> delete(@RequestBody MemberRequest memberRequest){
         return memberService.delete(memberRequest.getNum());
     }
 

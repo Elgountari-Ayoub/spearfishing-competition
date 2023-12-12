@@ -1,5 +1,6 @@
 package ma.youcode.pm.model;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,7 +16,12 @@ public class Hunting {
 
     @ManyToOne
     @JoinColumn(name = "member_num")
+    
     private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "competition_code")
+    private Competition competition;
 
     @ManyToOne
     @JoinColumn(name = "fish_code")

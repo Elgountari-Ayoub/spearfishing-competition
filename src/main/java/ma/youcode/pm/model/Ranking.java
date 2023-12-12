@@ -1,5 +1,6 @@
 package ma.youcode.pm.model;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class Ranking {
     @ManyToOne
     @MapsId("memberNum")
     @JoinColumn(name = "member_num", referencedColumnName = "num")
+    
     private Member member;
 
     @ManyToOne
