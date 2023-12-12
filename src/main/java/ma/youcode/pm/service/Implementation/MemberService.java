@@ -34,18 +34,18 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public ResponseEntity save(MemberRequest memberRequest) {
-        // Check
-//        Optional<Member> memberOptional = memberRepository.findById(memberRequest.getNum());
-//        if (memberOptional.isPresent()){
-//            return null;
-//        }
+    public ResponseEntity<?> save(MemberRequest memberRequest) {
         Member member = mapToEntity(memberRequest);
         memberRepository.save(member);
-                mapToResponse(member);
-        return new ResponseEntity(mapToResponse(member), HttpStatus.OK);
+        return new ResponseEntity(mapToResponse(member), HttpStatus.CREATED);
     }
 
+    @Override
+    public ResponseEntity<?> update(MemberRequest memberRequest) {
+        Member member = mapToEntity(memberRequest);
+        memberRepository.save(member);
+        return new ResponseEntity(mapToResponse(member), HttpStatus.CREATED);
+    }
 
     public MemberResponse mapToResponse(Member member) {
         MemberResponse response = new MemberResponse();

@@ -15,9 +15,9 @@ import java.util.List;
 @Table(name = "members")
 public class Member {
     @Id
-    @NotBlank(message = "num must not be blank")
-    @NotNull(message = "num must not be null")
-    @NotEmpty(message = "num must not be empty")
+//    @NotBlank(message = "num must not be blank")
+//    @NotNull(message = "num must not be null")
+//    @NotEmpty(message = "num must not be empty")
     private String num;
     private String name;
     private String familyName;

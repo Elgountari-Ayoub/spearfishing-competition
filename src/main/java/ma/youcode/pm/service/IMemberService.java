@@ -13,5 +13,6 @@ public interface IMemberService {
     Optional<MemberResponse> finByNum(String num);
     Page<MemberResponse> finAll(Pageable pageable);
     ResponseEntity save(MemberRequest memberRequest);
+    ResponseEntity update(MemberRequest memberRequest);
 
 }

@@ -27,7 +27,7 @@ public class MemberController extends ApiConfiguration {
     }
 
     //ToDo Find All Members
-    @GetMapping(value = {"members"})
+    @GetMapping(value = {"/members"})
     public ResponseEntity<Page<MemberResponse>> findAllMembers(
             @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
             @RequestParam(name = "pageSize", defaultValue = "5") int pageSize
@@ -38,20 +38,16 @@ public class MemberController extends ApiConfiguration {
     }
 
     //ToDo Member Registration/Creation
-    @PostMapping(value = "members")
+    @PostMapping(value = "/members")
     public ResponseEntity save(@RequestBody MemberRequest memberRequest) {
-        ResponseEntity memberResponse = memberService.save(memberRequest);
-//        if (memberResponse == null) {
-//            return new ResponseEntity<>("Failed to create member. Invalid request.", HttpStatus.BAD_REQUEST);
-//        }
-        return new ResponseEntity<>(memberResponse, HttpStatus.CREATED);
+        return memberService.save(memberRequest);
     }
 
 
     //ToDo Update Member
-    @PutMapping(value = "members")
+    @PutMapping(value = "/members")
     public ResponseEntity update(@RequestBody MemberRequest memberRequest ) {
-        return memberService.save(memberRequest);
+        return memberService.update(memberRequest);
     }
     //ToDo Delete Member
 
