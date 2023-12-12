@@ -47,6 +47,13 @@ public class MemberService implements IMemberService {
         return new ResponseEntity(mapToResponse(member), HttpStatus.CREATED);
     }
 
+    @Override
+    public ResponseEntity<?> delete(String num) {
+        memberRepository.deleteById(num);
+        return new ResponseEntity("Member deleted successfully", HttpStatus.OK);
+    }
+
+    //    HELPER METHODS
     public MemberResponse mapToResponse(Member member) {
         MemberResponse response = new MemberResponse();
         response.setNum(member.getNum());

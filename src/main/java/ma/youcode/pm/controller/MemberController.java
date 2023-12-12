@@ -46,10 +46,14 @@ public class MemberController extends ApiConfiguration {
 
     //ToDo Update Member
     @PutMapping(value = "/members")
-    public ResponseEntity update(@RequestBody MemberRequest memberRequest ) {
+    public ResponseEntity update(@RequestBody MemberRequest memberRequest) {
         return memberService.update(memberRequest);
     }
     //ToDo Delete Member
+    @DeleteMapping(value = "/members")
+    public ResponseEntity delete(@RequestBody MemberRequest memberRequest){
+        return memberService.delete(memberRequest.getNum());
+    }
 
 
 }

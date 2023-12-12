@@ -14,5 +14,6 @@ public interface IMemberService {
     Page<MemberResponse> finAll(Pageable pageable);
     ResponseEntity save(MemberRequest memberRequest);
     ResponseEntity update(MemberRequest memberRequest);
+    ResponseEntity delete(String num);
 
 }

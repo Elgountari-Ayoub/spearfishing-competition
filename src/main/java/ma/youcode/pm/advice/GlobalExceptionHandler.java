@@ -15,5 +15,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // Add more @ExceptionHandler methods for specific exceptions if needed
 }
