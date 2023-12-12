@@ -12,6 +12,7 @@ import java.util.List;
 public class Ranking {
     @Id
     @EmbeddedId
+    @Column(nullable = false)
     private RankingId id;
 
     private int rank;

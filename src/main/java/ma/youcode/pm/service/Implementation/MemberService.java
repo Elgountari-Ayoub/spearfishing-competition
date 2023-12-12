@@ -7,6 +7,8 @@ import ma.youcode.pm.repository.IMemberRepository;
 import ma.youcode.pm.service.IMemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -32,10 +34,16 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public MemberResponse save(MemberRequest memberRequest) {
+    public ResponseEntity save(MemberRequest memberRequest) {
+        // Check
+//        Optional<Member> memberOptional = memberRepository.findById(memberRequest.getNum());
+//        if (memberOptional.isPresent()){
+//            return null;
+//        }
         Member member = mapToEntity(memberRequest);
         memberRepository.save(member);
-        return mapToResponse(member);
+                mapToResponse(member);
+        return new ResponseEntity(mapToResponse(member), HttpStatus.OK);
     }
 
 

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 @RestController
 //@RequestMapping("/members")
@@ -37,14 +38,21 @@ public class MemberController extends ApiConfiguration {
     }
 
     //ToDo Member Registration/Creation
-    @PostMapping(value = "members/save")
-    public ResponseEntity<MemberResponse> save(@RequestBody MemberRequest memberRequest){
-        MemberResponse memberResponse = memberService.save(memberRequest);
+    @PostMapping(value = "members")
+    public ResponseEntity save(@RequestBody MemberRequest memberRequest) {
+        ResponseEntity memberResponse = memberService.save(memberRequest);
+//        if (memberResponse == null) {
+//            return new ResponseEntity<>("Failed to create member. Invalid request.", HttpStatus.BAD_REQUEST);
+//        }
         return new ResponseEntity<>(memberResponse, HttpStatus.CREATED);
     }
 
 
     //ToDo Update Member
+    @PutMapping(value = "members")
+    public ResponseEntity update(@RequestBody MemberRequest memberRequest ) {
+        return memberService.save(memberRequest);
+    }
     //ToDo Delete Member
 
 

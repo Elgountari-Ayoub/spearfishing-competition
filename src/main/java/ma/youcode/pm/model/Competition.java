@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "competitions")
 public class Competition {
     @Id
+    @Column(nullable = false)
     private String code;
 
     private Date date;
