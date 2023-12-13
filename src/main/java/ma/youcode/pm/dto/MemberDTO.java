@@ -37,7 +37,6 @@ public class MemberDTO implements Serializable {
     @NotBlank
     private String familyName;
 
-//    @NotNull(message = "invalid accession date")
     private LocalDate accessionDate = LocalDate.now();
 
     @NotBlank

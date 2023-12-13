@@ -2,6 +2,7 @@ package ma.youcode.pm.controller;
 
 import jakarta.validation.Valid;
 import ma.youcode.pm.dto.CompetitionDTO;
+import ma.youcode.pm.dto.RankingDTO;
 import ma.youcode.pm.service.Implementation.CompetitionService;
 import ma.youcode.pm.service.Implementation.CompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class CompetitionController {
     //TODO:  Find Competition By Code
     @GetMapping("/{code}")
     public ResponseEntity<CompetitionDTO> findByCode(@PathVariable String code) {
-            CompetitionDTO competitionDTO = competitionService.finByCode(code);
-            return ResponseEntity.status(HttpStatus.FOUND).body(competitionDTO);
+        CompetitionDTO competitionDTO = competitionService.finByCode(code);
+        return ResponseEntity.status(HttpStatus.FOUND).body(competitionDTO);
     }
 
     //TODO:  Find All Competitions
@@ -63,6 +64,15 @@ public class CompetitionController {
         competitionService.delete(code);
         return ResponseEntity.noContent().build();
 
+
+    }
+
+    //TODO:  JOIN A MEMBER A COMPETITION
+    @PostMapping("/join")
+    public ResponseEntity<CompetitionDTO> join(@RequestBody RankingDTO rankingDTO) {
+        System.out.println(rankingDTO);
+        CompetitionDTO competitionDTO = competitionService.join(rankingDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
 
     }
 

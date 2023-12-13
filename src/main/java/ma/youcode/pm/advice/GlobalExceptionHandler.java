@@ -56,7 +56,11 @@ public class GlobalExceptionHandler {
     }
 
     // Hadi for not found exception
-    @ExceptionHandler({MemberNotFoundException.class, CompetitionNotFoundException.class})
+    @ExceptionHandler({
+            MemberNotFoundException.class,
+            CompetitionNotFoundException.class,
+            RegistrationException.class
+    })
     public ResponseEntity<?> handleMemberNotFoundException(Exception ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
