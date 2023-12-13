@@ -1,7 +1,6 @@
 package ma.youcode.pm.service;
 
-import ma.youcode.pm.dto.member.MemberRequest;
-import ma.youcode.pm.dto.member.MemberResponse;
+import ma.youcode.pm.dto.MemberDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 
 public interface ICompetitionService {
-    Optional<MemberResponse> finByCode(String num);
-    Page<MemberResponse> finAll(Pageable pageable);
-    ResponseEntity save(MemberRequest memberRequest);
-    ResponseEntity update(MemberRequest memberRequest);
-    ResponseEntity delete(String num);
+    MemberDTO finByCode(String num);
+    Page<MemberDTO> finAll(Pageable pageable);
+    ResponseEntity save(MemberDTO memberDTO);
+//    ResponseEntity update(MemberDTO memberDTO);
+//    ResponseEntity delete(String num);
 
 }

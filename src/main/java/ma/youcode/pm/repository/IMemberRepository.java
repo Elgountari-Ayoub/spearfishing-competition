@@ -9,4 +9,5 @@ import java.util.List;
 
 @Repository
 public interface IMemberRepository extends JpaRepository<Member, String> {
+    boolean existsByNum(String num);
 }

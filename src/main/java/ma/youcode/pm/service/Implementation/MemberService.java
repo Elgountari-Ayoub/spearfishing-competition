@@ -1,10 +1,13 @@
 package ma.youcode.pm.service.Implementation;
 
-import ma.youcode.pm.dto.member.MemberRequest;
-import ma.youcode.pm.dto.member.MemberResponse;
+import ma.youcode.pm.dto.MemberDTO;
+import ma.youcode.pm.exception.DuplicateMemberException;
+import ma.youcode.pm.exception.MemberNotFoundException;
 import ma.youcode.pm.model.Member;
 import ma.youcode.pm.repository.IMemberRepository;
 import ma.youcode.pm.service.IMemberService;
+import org.modelmapper.ModelMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,70 +20,61 @@ import java.util.Optional;
 public class MemberService implements IMemberService {
     IMemberRepository memberRepository;
 
-    public MemberService(IMemberRepository memberRepository) {
+    private ModelMapper modelMapper;
+
+    public MemberService(IMemberRepository memberRepository, ModelMapper modelMapper) {
         this.memberRepository = memberRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public Optional<MemberResponse> finByNum(String num) {
-        return memberRepository.findById(num).map(this::mapToResponse);
+    public MemberDTO finByNum(String num) {
+        Member member = memberRepository.findById(num)
+                .orElseThrow(() -> new MemberNotFoundException("Member not found with num: " + num));
+
+        return modelMapper.map(member, MemberDTO.class);
     }
 
     @Override
-    public Page<MemberResponse> finAll(Pageable pageable) {
+    public Page<MemberDTO> finAll(Pageable pageable) {
         Page<Member> members = memberRepository.findAll(pageable);
-        return members.map(this::mapToResponse);
+        return members.map(member -> modelMapper.map(member, MemberDTO.class));
     }
 
     @Override
-    public ResponseEntity<?> save(MemberRequest memberRequest) {
-        Member member = mapToEntity(memberRequest);
-        memberRepository.save(member);
-        return new ResponseEntity(mapToResponse(member), HttpStatus.CREATED);
+    public MemberDTO save(MemberDTO memberDTO) {
+        if (memberRepository.existsByNum(memberDTO.getNum())) {
+            throw new DuplicateMemberException("Member with num " + memberDTO.getNum() + " already exists.");
+        }
+        Member member = modelMapper.map(memberDTO, Member.class);
+        member = memberRepository.save(member);
+        return modelMapper.map(member, MemberDTO.class);
     }
 
     @Override
-    public ResponseEntity<?> update(MemberRequest memberRequest) {
-        Member member = mapToEntity(memberRequest);
-        memberRepository.save(member);
-        return new ResponseEntity(mapToResponse(member), HttpStatus.CREATED);
+    public MemberDTO update(String num, MemberDTO memberDTO) {
+        Member existingMember = memberRepository.findById(num)
+                .orElseThrow(() -> new MemberNotFoundException("Member not found with num: " + num));
+
+        existingMember.setName(memberDTO.getName());
+        existingMember.setFamilyName(memberDTO.getFamilyName());
+        existingMember.setAccessionDate(memberDTO.getAccessionDate());
+        existingMember.setNationality(memberDTO.getNationality());
+        existingMember.setIdentityDocument(memberDTO.getIdentityDocument());
+
+        existingMember = memberRepository.save(existingMember);
+
+        return modelMapper.map(existingMember, MemberDTO.class);
     }
 
+
     @Override
-    public ResponseEntity<?> delete(String num) {
-        memberRepository.deleteById(num);
-        return new ResponseEntity("Member deleted successfully", HttpStatus.OK);
+    public void delete(String num) {
+        Member member = memberRepository.findById(num)
+                .orElseThrow(() -> new MemberNotFoundException("Member not found with num: " + num));
+        memberRepository.delete(member);
     }
 
     //    HELPER METHODS
-    public MemberResponse mapToResponse(Member member) {
-        MemberResponse response = new MemberResponse();
-        response.setNum(member.getNum());
-        response.setName(member.getName());
-        response.setFamilyName(member.getFamilyName());
-        response.setAccessionDate(member.getAccessionDate());
-        response.setNationality(member.getNationality());
-        response.setIdentityDocument(member.getIdentityDocument());
 
-//        response.setRankings(member.getRankings());
-//        response.setCompetitions(member.getCompetitions());
-//        response.setHuntings(member.getHuntings());
-        return response;
-    }
-
-    public static Member mapToEntity(MemberRequest memberRequest) {
-        Member member = new Member();
-        member.setNum(memberRequest.getNum());
-        member.setName(memberRequest.getName());
-        member.setFamilyName(memberRequest.getFamilyName());
-        member.setAccessionDate(memberRequest.getAccessionDate());
-        member.setNationality(memberRequest.getNationality());
-        member.setIdentityDocument(memberRequest.getIdentityDocument());
-
-//        member.setRankings(memberRequest.getRankings());
-//        member.setCompetitions(memberRequest.getCompetitions());
-//        member.setHuntings(memberRequest.getHuntings());
-
-        return member;
-    }
 }

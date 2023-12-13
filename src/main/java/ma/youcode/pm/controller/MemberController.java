@@ -1,7 +1,9 @@
 package ma.youcode.pm.controller;
 
-import ma.youcode.pm.dto.member.MemberRequest;
-import ma.youcode.pm.dto.member.MemberResponse;
+import jakarta.validation.Valid;
+import ma.youcode.pm.dto.MemberDTO;
+import ma.youcode.pm.exception.DuplicateMemberException;
+import ma.youcode.pm.exception.MemberNotFoundException;
 import ma.youcode.pm.service.Implementation.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,43 +14,57 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class MemberController extends ApiConfiguration {
+@RequestMapping("/api/v1/members/")
+public class MemberController {
 
     MemberService memberService;
 
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+
     }
 
-    //ToDo Find All Members
-    @GetMapping(value = {"/members"})
-    public ResponseEntity<Page<MemberResponse>> findAllMembers(
+    //TODO:  Member Registration/Creation
+    @PostMapping
+    public ResponseEntity<MemberDTO> save(@Valid @RequestBody MemberDTO memberDTO) {
+        MemberDTO createdMember = memberService.save(memberDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdMember);
+    }
+
+    //TODO:  Find Member By Num
+    @GetMapping("/{num}")
+    public ResponseEntity<MemberDTO> findByNum(@PathVariable String num) {
+            MemberDTO memberDTO = memberService.finByNum(num);
+            return ResponseEntity.status(HttpStatus.FOUND).body(memberDTO);
+    }
+
+    //TODO:  Find All Members
+    @GetMapping
+    public ResponseEntity<Page<MemberDTO>> findAllMembers(
             @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
-            @RequestParam(name = "pageSize", defaultValue = "5") int pageSize
+            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize
     ) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<MemberResponse> members = memberService.finAll(pageable);
-        return new ResponseEntity<>(members, HttpStatus.FOUND);
+        Page<MemberDTO> members = memberService.finAll(pageable);
+        return ResponseEntity.status(HttpStatus.FOUND).body(members);
     }
 
-    //ToDo Member Registration/Creation
-    @PostMapping(value = "/members")
-    public ResponseEntity<?> save(@RequestBody MemberRequest memberRequest) {
-        return memberService.save(memberRequest);
+    //TODO:  Update Member
+    @PutMapping(value = "/{num}")
+    public ResponseEntity<MemberDTO> update(@PathVariable String num, @Valid @RequestBody MemberDTO memberDTO) {
+        MemberDTO updatedMember = memberService.update(num, memberDTO);
+        return ResponseEntity.ok(updatedMember);
+
     }
 
-    //ToDo Update Member
-    @PutMapping(value = "/members")
-    public ResponseEntity<?> update(@RequestBody MemberRequest memberRequest) {
-        return memberService.update(memberRequest);
-    }
+    //TODO:  Delete Member
+    @DeleteMapping(value = "/{num}")
+    public ResponseEntity<MemberDTO> delete(@PathVariable String num) {
+        memberService.delete(num);
+        return ResponseEntity.noContent().build();
 
-    //ToDo Delete Member
-    @DeleteMapping(value = "/members")
-    public ResponseEntity<?> delete(@RequestBody MemberRequest memberRequest){
-        return memberService.delete(memberRequest.getNum());
-    }
 
+    }
 
 }

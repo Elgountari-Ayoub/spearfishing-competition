@@ -1,13 +1,12 @@
 package ma.youcode.pm.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import ma.youcode.pm.service.Implementation.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import ma.youcode.pm.config.AppConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Home extends ApiConfiguration{
+public class Home {
 
     @GetMapping(value = {"/", ""})
     public String sayHello(HttpServletRequest request) {
