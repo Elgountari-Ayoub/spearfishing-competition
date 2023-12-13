@@ -2,8 +2,6 @@ package ma.youcode.pm.controller;
 
 import jakarta.validation.Valid;
 import ma.youcode.pm.dto.MemberDTO;
-import ma.youcode.pm.exception.DuplicateMemberException;
-import ma.youcode.pm.exception.MemberNotFoundException;
 import ma.youcode.pm.service.Implementation.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,7 +32,7 @@ public class MemberController {
 
     //TODO:  Find Member By Num
     @GetMapping("/{num}")
-    public ResponseEntity<MemberDTO> findByNum(@PathVariable int num) {
+    public ResponseEntity<MemberDTO> findByNum(@PathVariable long num) {
             MemberDTO memberDTO = memberService.finByNum(num);
             return ResponseEntity.status(HttpStatus.FOUND).body(memberDTO);
     }
@@ -52,7 +50,7 @@ public class MemberController {
 
     //TODO:  Update Member
     @PutMapping(value = "/{num}")
-    public ResponseEntity<MemberDTO> update(@PathVariable int num, @Valid @RequestBody MemberDTO memberDTO) {
+    public ResponseEntity<MemberDTO> update(@PathVariable long num, @Valid @RequestBody MemberDTO memberDTO) {
         MemberDTO updatedMember = memberService.update(num, memberDTO);
         return ResponseEntity.ok(updatedMember);
 
@@ -60,7 +58,7 @@ public class MemberController {
 
     //TODO:  Delete Member
     @DeleteMapping(value = "/{num}")
-    public ResponseEntity<MemberDTO> delete(@PathVariable int num) {
+    public ResponseEntity<MemberDTO> delete(@PathVariable long num) {
         memberService.delete(num);
         return ResponseEntity.noContent().build();
 

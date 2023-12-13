@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import ma.youcode.pm.enums.IdentityDocumentType;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Member {
 
     private String name;
     private String familyName;
-    private Date accessionDate;
+    private LocalDate accessionDate;
     private String nationality;
 
     @Enumerated(EnumType.STRING)

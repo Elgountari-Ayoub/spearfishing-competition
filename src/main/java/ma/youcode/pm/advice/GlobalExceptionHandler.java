@@ -45,8 +45,8 @@ public class GlobalExceptionHandler {
     }
 
     // Hadi for Duplicated PK(num)
-    @ExceptionHandler({DuplicateMemberException.class, CompetitionNotFoundException.class})
-    public ResponseEntity<?> handleDuplicateMemberException(DuplicateMemberException ex) {
+    @ExceptionHandler({DuplicateMemberException.class, DuplicateCompetitionException.class})
+    public ResponseEntity<?> handleDuplicateMemberException(Exception ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
 
@@ -57,8 +57,8 @@ public class GlobalExceptionHandler {
     }
 
     // Hadi for member not found
-    @ExceptionHandler({MemberNotFoundException.class, DuplicateCompetitionException.class})
-    public ResponseEntity<?> handleMemberNotFoundException(MemberNotFoundException ex) {
+    @ExceptionHandler({MemberNotFoundException.class, CompetitionNotFoundException.class})
+    public ResponseEntity<?> handleMemberNotFoundException(Exception ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
 

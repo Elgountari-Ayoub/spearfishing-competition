@@ -1,32 +1,41 @@
 package ma.youcode.pm.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CompetitionDTO {
-    @NotBlank(message = "invalid code")
+//    @NotBlank(message = "invalid code")
     private String code;
 
-    @NotBlank(message = "invalid date")
-    private Date date;
+    @NotNull
+    private LocalDate date;
 
-    @NotBlank(message = "invalid start time")
-    private Date startTime;
+    @NotNull
+    private LocalTime startTime;
 
-    @NotBlank(message = "invalid end time")
-    private Date endTime;
+    @NotNull
+    private LocalTime endTime;
 
-    @NotBlank(message = "invalid number of participants")
-    private int numberOfParticipants;
+    @NotNull
+    @Min(3)
+    @Max(30)
+    private int numberOfParticipants = 3;
 
-    @NotBlank(message = "invalid location")
+    @NotBlank
+    @Size(min = 3, max = 255)
     private String location;
 
-    @NotBlank(message = "invalid amount")
+    @NotNull
     private Double amount;
 }

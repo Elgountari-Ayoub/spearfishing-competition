@@ -18,6 +18,7 @@ import ma.youcode.pm.model.Hunting;
 import ma.youcode.pm.model.Ranking;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -30,25 +31,25 @@ public class MemberDTO implements Serializable {
 //    @NotNull(message = "invalid num")
     private Long num;
 
-    @NotBlank(message = "invalid name")
+    @NotBlank
     private String name;
 
-    @NotBlank(message = "invalid family name")
+    @NotBlank
     private String familyName;
 
-    @NotNull(message = "invalid accession date")
-    private Date accessionDate;
+//    @NotNull(message = "invalid accession date")
+    private LocalDate accessionDate = LocalDate.now();
 
-    @NotBlank(message = "invalid nationality")
+    @NotBlank
     private String nationality;
 
-    @NotBlank(message = "invalid identity number")
+    @NotBlank
     private String identityNumber;
 
     @Enumerated(EnumType.STRING)
     private IdentityDocumentType identityDocument;
 
-    @AssertTrue(message = "invalid identityDocumentType")
+    @AssertTrue
     private boolean isValidIdentityDocument() {
         return identityDocument != null &&
                 (identityDocument == IdentityDocumentType.CIN ||

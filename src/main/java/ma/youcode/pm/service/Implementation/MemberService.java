@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -58,7 +60,6 @@ public class MemberService implements IMemberService {
 
         existingMember.setName(memberDTO.getName());
         existingMember.setFamilyName(memberDTO.getFamilyName());
-        existingMember.setAccessionDate(memberDTO.getAccessionDate());
         existingMember.setNationality(memberDTO.getNationality());
         existingMember.setIdentityDocument(memberDTO.getIdentityDocument());
         existingMember.setIdentityNumber(memberDTO.getIdentityNumber());

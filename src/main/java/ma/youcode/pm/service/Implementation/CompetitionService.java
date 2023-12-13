@@ -6,7 +6,9 @@ import ma.youcode.pm.exception.DuplicateCompetitionException;
 import ma.youcode.pm.model.Competition;
 import ma.youcode.pm.repository.ICompetitionRepository;
 import ma.youcode.pm.service.ICompetitionService;
+import ma.youcode.pm.util.CompetitionCodeGenerator;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,19 +16,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompetitionService implements ICompetitionService {
     ICompetitionRepository competitionRepository;
-
+    CompetitionCodeGenerator competitionCodeGenerator;
     private ModelMapper modelMapper;
 
-    public CompetitionService(ICompetitionRepository competitionRepository, ModelMapper modelMapper) {
+    public CompetitionService(ICompetitionRepository competitionRepository, ModelMapper modelMapper, CompetitionCodeGenerator competitionCodeGenerator) {
         this.competitionRepository = competitionRepository;
         this.modelMapper = modelMapper;
+        this.competitionCodeGenerator = competitionCodeGenerator;
     }
 
     @Override
     public CompetitionDTO finByCode(String code) {
         Competition competition = competitionRepository.findById(code)
                 .orElseThrow(() -> new CompetitionNotFoundException("Competition not found with code: " + code));
-
         return modelMapper.map(competition, CompetitionDTO.class);
     }
 
@@ -38,6 +40,7 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public CompetitionDTO save(CompetitionDTO competitionDTO) {
+        competitionDTO.setCode(competitionCodeGenerator.generate(competitionDTO.getLocation(), competitionDTO.getDate()));
         if (competitionRepository.existsByCode(competitionDTO.getCode())) {
             throw new DuplicateCompetitionException("Competition with code " + competitionDTO.getCode() + " already exists.");
         }
@@ -51,7 +54,7 @@ public class CompetitionService implements ICompetitionService {
         Competition existingCompetition = competitionRepository.findById(code)
                 .orElseThrow(() -> new CompetitionNotFoundException("Competition not found with code: " + code));
 
-        existingCompetition.setCode(competitionDTO.getCode());
+        existingCompetition.setCode(code);
         existingCompetition.setDate(competitionDTO.getDate());
         existingCompetition.setStartTime(competitionDTO.getStartTime());
         existingCompetition.setEndTime(competitionDTO.getEndTime());

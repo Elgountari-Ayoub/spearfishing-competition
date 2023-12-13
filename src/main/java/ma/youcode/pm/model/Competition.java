@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import ma.youcode.pm.enums.IdentityDocumentType;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,13 +18,13 @@ public class Competition {
     @Column(nullable = false)
     private String code;
 
-    private Date date;
+    private LocalDate date;
 
     @Temporal(TemporalType.TIME)
-    private Date startTime;
+    private LocalTime startTime;
 
     @Temporal(TemporalType.TIME)
-    private Date endTime;
+    private LocalTime endTime;
     private int numberOfParticipants;
     private String location;
     private Double amount;

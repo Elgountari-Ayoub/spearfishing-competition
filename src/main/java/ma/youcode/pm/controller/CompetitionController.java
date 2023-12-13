@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/competition")
+@RequestMapping("/api/v1/competitions")
 public class CompetitionController {
 
     CompetitionService competitionService;
