@@ -1,4 +1,4 @@
-package ma.youcode.pm.dto.competition;
+package ma.youcode.pm.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Builder
 @Data
-public class CompetitionResponse {
+public class CompetitionDTO {
     private String code;
     private Date date;
     private Date startTime;

@@ -1,5 +1,7 @@
 package ma.youcode.pm.advice;
 
+import ma.youcode.pm.exception.CompetitionNotFoundException;
+import ma.youcode.pm.exception.DuplicateCompetitionException;
 import ma.youcode.pm.exception.DuplicateMemberException;
 import ma.youcode.pm.exception.MemberNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error mgader:\n" + ex.getMessage());
     }
 
-    // Hadi for validate the MemberDTO fields
+    // Hadi for validate the MemberDTO, CompetitionDTO fields
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> notValid(MethodArgumentNotValidException ex) {
         Map<String, String> fieldErrors = new HashMap<>();
@@ -43,7 +45,7 @@ public class GlobalExceptionHandler {
     }
 
     // Hadi for Duplicated PK(num)
-    @ExceptionHandler(DuplicateMemberException.class)
+    @ExceptionHandler({DuplicateMemberException.class, CompetitionNotFoundException.class})
     public ResponseEntity<?> handleDuplicateMemberException(DuplicateMemberException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
@@ -55,7 +57,7 @@ public class GlobalExceptionHandler {
     }
 
     // Hadi for member not found
-    @ExceptionHandler(MemberNotFoundException.class)
+    @ExceptionHandler({MemberNotFoundException.class, DuplicateCompetitionException.class})
     public ResponseEntity<?> handleMemberNotFoundException(MemberNotFoundException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
