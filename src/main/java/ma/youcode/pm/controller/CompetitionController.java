@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import ma.youcode.pm.dto.CompetitionDTO;
 import ma.youcode.pm.dto.RankingDTO;
 import ma.youcode.pm.service.Implementation.CompetitionService;
-import ma.youcode.pm.service.Implementation.CompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +34,7 @@ public class CompetitionController {
     //TODO:  Find Competition By Code
     @GetMapping("/{code}")
     public ResponseEntity<CompetitionDTO> findByCode(@PathVariable String code) {
-        CompetitionDTO competitionDTO = competitionService.finByCode(code);
+        CompetitionDTO competitionDTO = competitionService.findByCode(code);
         return ResponseEntity.status(HttpStatus.FOUND).body(competitionDTO);
     }
 

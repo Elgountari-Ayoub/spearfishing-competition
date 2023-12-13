@@ -43,7 +43,7 @@ public class CompetitionService implements ICompetitionService {
     }
 
     @Override
-    public CompetitionDTO finByCode(String code) {
+    public CompetitionDTO findByCode(String code) {
         Competition competition = competitionRepository.findById(code)
                 .orElseThrow(() -> new CompetitionNotFoundException("Competition not found with code: " + code));
         return modelMapper.map(competition, CompetitionDTO.class);
