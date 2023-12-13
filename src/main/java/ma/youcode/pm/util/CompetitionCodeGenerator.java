@@ -13,7 +13,7 @@ public class CompetitionCodeGenerator {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yy");
         String formattedDate = date.format(dateFormatter);
 
-        return location.substring(0, 3) + "-" + formattedDate.replace("-", "");
+        return location.substring(0, 3) + "-" + formattedDate;
     }
 
 }

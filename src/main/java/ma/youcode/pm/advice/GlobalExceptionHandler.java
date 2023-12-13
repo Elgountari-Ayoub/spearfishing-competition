@@ -1,9 +1,6 @@
 package ma.youcode.pm.advice;
 
-import ma.youcode.pm.exception.CompetitionNotFoundException;
-import ma.youcode.pm.exception.DuplicateCompetitionException;
-import ma.youcode.pm.exception.DuplicateMemberException;
-import ma.youcode.pm.exception.MemberNotFoundException;
+import ma.youcode.pm.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,7 +18,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<String> handleGenericException(Exception ex) {
-        // Log the exception and return a generic error message
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error mgader:\n" + ex.getMessage());
     }
 
@@ -44,8 +40,11 @@ public class GlobalExceptionHandler {
 
     }
 
-    // Hadi for Duplicated PK(num)
-    @ExceptionHandler({DuplicateMemberException.class, DuplicateCompetitionException.class})
+    // Hadi for Duplicated PK
+    @ExceptionHandler({
+            DuplicateMemberException.class,
+            DuplicateCompetitionException.class,
+            CompetitionExistInSameDayException.class})
     public ResponseEntity<?> handleDuplicateMemberException(Exception ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
@@ -56,7 +55,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(result, HttpStatus.CONFLICT);
     }
 
-    // Hadi for member not found
+    // Hadi for not found exception
     @ExceptionHandler({MemberNotFoundException.class, CompetitionNotFoundException.class})
     public ResponseEntity<?> handleMemberNotFoundException(Exception ex) {
         Map<String, String> error = new HashMap<>();

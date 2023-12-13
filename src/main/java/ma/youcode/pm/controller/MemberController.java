@@ -61,8 +61,6 @@ public class MemberController {
     public ResponseEntity<MemberDTO> delete(@PathVariable long num) {
         memberService.delete(num);
         return ResponseEntity.noContent().build();
-
-
     }
 
 }

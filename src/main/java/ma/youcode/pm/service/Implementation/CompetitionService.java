@@ -1,6 +1,7 @@
 package ma.youcode.pm.service.Implementation;
 
 import ma.youcode.pm.dto.CompetitionDTO;
+import ma.youcode.pm.exception.CompetitionExistInSameDayException;
 import ma.youcode.pm.exception.CompetitionNotFoundException;
 import ma.youcode.pm.exception.DuplicateCompetitionException;
 import ma.youcode.pm.model.Competition;
@@ -43,6 +44,8 @@ public class CompetitionService implements ICompetitionService {
         competitionDTO.setCode(competitionCodeGenerator.generate(competitionDTO.getLocation(), competitionDTO.getDate()));
         if (competitionRepository.existsByCode(competitionDTO.getCode())) {
             throw new DuplicateCompetitionException("Competition with code " + competitionDTO.getCode() + " already exists.");
+        }else if(competitionRepository.existsByDate(competitionDTO.getDate())){
+            throw new CompetitionExistInSameDayException("A competition already exists on the same day");
         }
         Competition competition = modelMapper.map(competitionDTO, Competition.class);
         competition = competitionRepository.save(competition);
