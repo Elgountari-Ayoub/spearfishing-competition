@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 
 public interface IMemberService {
-    MemberDTO finByNum(String num);
+    MemberDTO finByNum(long num);
     Page<MemberDTO> finAll(Pageable pageable);
     MemberDTO save(MemberDTO memberDTO);
-    MemberDTO update(String num, MemberDTO memberDTO);
-    void delete(String num);
+    MemberDTO update(long num, MemberDTO memberDTO);
+    void delete(long num);
 
 }

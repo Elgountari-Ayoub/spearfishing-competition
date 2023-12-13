@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IMemberRepository extends JpaRepository<Member, String> {
-    boolean existsByNum(String num);
+public interface IMemberRepository extends JpaRepository<Member, Long> {
+    boolean existsByNum(Long num);
 }

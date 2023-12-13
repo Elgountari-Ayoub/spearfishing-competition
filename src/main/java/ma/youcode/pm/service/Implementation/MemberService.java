@@ -28,7 +28,7 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public MemberDTO finByNum(String num) {
+    public MemberDTO finByNum(long num) {
         Member member = memberRepository.findById(num)
                 .orElseThrow(() -> new MemberNotFoundException("Member not found with num: " + num));
 
@@ -52,7 +52,7 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public MemberDTO update(String num, MemberDTO memberDTO) {
+    public MemberDTO update(long num, MemberDTO memberDTO) {
         Member existingMember = memberRepository.findById(num)
                 .orElseThrow(() -> new MemberNotFoundException("Member not found with num: " + num));
 
@@ -61,6 +61,7 @@ public class MemberService implements IMemberService {
         existingMember.setAccessionDate(memberDTO.getAccessionDate());
         existingMember.setNationality(memberDTO.getNationality());
         existingMember.setIdentityDocument(memberDTO.getIdentityDocument());
+        existingMember.setIdentityNumber(memberDTO.getIdentityNumber());
 
         existingMember = memberRepository.save(existingMember);
 
@@ -69,7 +70,7 @@ public class MemberService implements IMemberService {
 
 
     @Override
-    public void delete(String num) {
+    public void delete(long num) {
         Member member = memberRepository.findById(num)
                 .orElseThrow(() -> new MemberNotFoundException("Member not found with num: " + num));
         memberRepository.delete(member);

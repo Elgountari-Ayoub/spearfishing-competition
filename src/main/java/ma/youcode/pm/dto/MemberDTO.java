@@ -26,26 +26,29 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDTO implements Serializable {
-    
-    @NotBlank(message = "Wa La7ya Dir Chi 7aja, ra num hada")
-    private String num;
 
-    @NotBlank(message = "Wa La7ya Dir Chi 7aja, ra name hada")
+//    @NotNull(message = "invalid num")
+    private Long num;
+
+    @NotBlank(message = "invalid name")
     private String name;
 
-    @NotBlank(message = "Wa La7ya Dir Chi 7aja, ra familyName hada")
+    @NotBlank(message = "invalid family name")
     private String familyName;
 
-    @NotNull(message = "Wa La7ya Dir Chi 7aja, ra accessionDate hada")
+    @NotNull(message = "invalid accession date")
     private Date accessionDate;
 
-    @NotBlank(message = "Wa La7ya Dir Chi 7aja, ra nationality haddi")
+    @NotBlank(message = "invalid nationality")
     private String nationality;
+
+    @NotBlank(message = "invalid identity number")
+    private String identityNumber;
 
     @Enumerated(EnumType.STRING)
     private IdentityDocumentType identityDocument;
 
-    @AssertTrue(message = "Wa La7ya Dir Chi 7aja, ra identityDocumentType hada")
+    @AssertTrue(message = "invalid identityDocumentType")
     private boolean isValidIdentityDocument() {
         return identityDocument != null &&
                 (identityDocument == IdentityDocumentType.CIN ||

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ICompetitionRepository extends JpaRepository<Competition, String> {
-    boolean existsByCode(String num);
+    boolean existsByCode(String code);
 
 }

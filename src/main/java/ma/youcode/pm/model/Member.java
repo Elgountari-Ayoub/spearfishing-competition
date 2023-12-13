@@ -16,11 +16,9 @@ import java.util.List;
 @Table(name = "members")
 public class Member {
     @Id
-    private String num;
-    //    @NotBlank(message = "num must not be blank")
-//    @NotNull(message = "num must not be null")
-//    @NotEmpty(message = "num must not be empty")
-//    @Column(name = "name", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long num;
+
     private String name;
     private String familyName;
     private Date accessionDate;
@@ -28,4 +26,6 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private IdentityDocumentType identityDocument;
+    @Column(name = "identity_number", unique = true, nullable = false)
+    private String identityNumber;
 }

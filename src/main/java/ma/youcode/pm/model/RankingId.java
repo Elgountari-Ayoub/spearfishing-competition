@@ -11,6 +11,6 @@ import java.util.Date;
 @Data
 @Embeddable
 public class RankingId implements Serializable {
-    private String memberNum;
+    private Long memberNum;
     private String competitionCode;
 }

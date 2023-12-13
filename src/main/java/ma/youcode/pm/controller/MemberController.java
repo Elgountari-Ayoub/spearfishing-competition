@@ -34,14 +34,14 @@ public class MemberController {
 
     //TODO:  Find Member By Num
     @GetMapping("/{num}")
-    public ResponseEntity<MemberDTO> findByNum(@PathVariable String num) {
+    public ResponseEntity<MemberDTO> findByNum(@PathVariable int num) {
             MemberDTO memberDTO = memberService.finByNum(num);
             return ResponseEntity.status(HttpStatus.FOUND).body(memberDTO);
     }
 
     //TODO:  Find All Members
     @GetMapping
-    public ResponseEntity<Page<MemberDTO>> findAllMembers(
+    public ResponseEntity<Page<MemberDTO>> findAll(
             @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
             @RequestParam(name = "pageSize", defaultValue = "10") int pageSize
     ) {
@@ -52,7 +52,7 @@ public class MemberController {
 
     //TODO:  Update Member
     @PutMapping(value = "/{num}")
-    public ResponseEntity<MemberDTO> update(@PathVariable String num, @Valid @RequestBody MemberDTO memberDTO) {
+    public ResponseEntity<MemberDTO> update(@PathVariable int num, @Valid @RequestBody MemberDTO memberDTO) {
         MemberDTO updatedMember = memberService.update(num, memberDTO);
         return ResponseEntity.ok(updatedMember);
 
@@ -60,7 +60,7 @@ public class MemberController {
 
     //TODO:  Delete Member
     @DeleteMapping(value = "/{num}")
-    public ResponseEntity<MemberDTO> delete(@PathVariable String num) {
+    public ResponseEntity<MemberDTO> delete(@PathVariable int num) {
         memberService.delete(num);
         return ResponseEntity.noContent().build();
 
