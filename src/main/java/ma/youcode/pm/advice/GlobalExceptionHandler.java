@@ -44,7 +44,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             DuplicateMemberException.class,
             DuplicateCompetitionException.class,
-            CompetitionExistInSameDayException.class})
+            CompetitionExistInSameDayException.class,
+            DuplicateFishException.class
+    })
     public ResponseEntity<?> handleDuplicateMemberException(Exception ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
@@ -60,7 +62,8 @@ public class GlobalExceptionHandler {
             MemberNotFoundException.class,
             CompetitionNotFoundException.class,
             RegistrationException.class,
-            LevelNotFoundException.class
+            LevelNotFoundException.class,
+            FishNotFoundException.class
     })
     public ResponseEntity<?> handleMemberNotFoundException(Exception ex) {
         Map<String, String> error = new HashMap<>();

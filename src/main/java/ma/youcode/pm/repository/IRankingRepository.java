@@ -12,4 +12,5 @@ import java.util.Optional;
 @Repository
 public interface IRankingRepository extends JpaRepository<Ranking, RankingId> {
     boolean existsRankingByCompetitionAndMember(Competition competition, Member member);
+    boolean existsByCompetitionCodeAndMemberNum(String competitionCode, long memberNum);
 }

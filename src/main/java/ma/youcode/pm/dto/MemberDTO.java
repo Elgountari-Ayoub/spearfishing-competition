@@ -28,21 +28,21 @@ import java.util.List;
 @AllArgsConstructor
 public class MemberDTO implements Serializable {
 
-//    @NotNull(message = "invalid num")
+    @NotNull(message = "num is required")
     private Long num;
 
-    @NotBlank
+    @NotBlank(message = "name is required")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "family Name is required")
     private String familyName;
 
     private LocalDate accessionDate = LocalDate.now();
 
-    @NotBlank
+    @NotBlank(message = "Nationality is required")
     private String nationality;
 
-    @NotBlank
+    @NotBlank(message = "Identity Number is required")
     private String identityNumber;
 
     @Enumerated(EnumType.STRING)

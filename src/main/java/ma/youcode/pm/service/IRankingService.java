@@ -12,7 +12,10 @@ public interface IRankingService {
     RankingDTO findById(RankingId rankingId);
     Page<RankingDTO> finAll(Pageable pageable);
     RankingDTO save(RankingDTO RankingDTO);
-//    RankingDTO update(RankingId rankingId, RankingDTO rankingDTO);
+
+    RankingDTO update(RankingId rankingId, RankingDTO rankingDTO);
+
+    //    RankingDTO update(RankingId rankingId);
     void delete(RankingId rankingId);
 
 }

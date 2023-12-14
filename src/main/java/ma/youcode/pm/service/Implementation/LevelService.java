@@ -41,7 +41,7 @@ public class LevelService implements ILevelService {
     @Override
     public LevelDTO save(LevelDTO levelDTO) {
         Level level = modelMapper.map(levelDTO, Level.class);
-        levelRepository.save(level);
+        level = levelRepository.save(level);
         return modelMapper.map(level, LevelDTO.class);
     }
 
@@ -49,7 +49,7 @@ public class LevelService implements ILevelService {
     public LevelDTO update(Long code, LevelDTO levelDTO) {
         Level level = levelRepository.findById(code)
                 .orElseThrow(() -> new LevelNotFoundException("Level not found with code: " + code));
-        levelRepository.save(level);
+        level = levelRepository.save(level);
         return modelMapper.map(level, LevelDTO.class);
     }
 

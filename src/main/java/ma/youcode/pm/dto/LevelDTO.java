@@ -4,13 +4,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class LevelDTO {
-
-    @NotNull(message = "code is required")
-    private int code;
+    @NotNull(message = "Code is required")
+    private Long code;
 
     @NotBlank(message = "Description is required")
     private String description;

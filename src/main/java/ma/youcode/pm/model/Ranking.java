@@ -3,10 +3,6 @@ package ma.youcode.pm.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.Date;
-import java.util.List;
-
 @Data
 @Entity
 @Table(name = "rankings")

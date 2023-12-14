@@ -23,7 +23,7 @@ public class LevelController {
 
     }
 
-    //TODO:  Level Registration/Creation
+    //TODO:  Level Creation
     @PostMapping
     public ResponseEntity<LevelDTO> save(@Valid @RequestBody LevelDTO levelDTO) {
         LevelDTO createdLevel = levelService.save(levelDTO);

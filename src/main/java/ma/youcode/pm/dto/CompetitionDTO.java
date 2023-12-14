@@ -16,16 +16,16 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompetitionDTO implements Serializable {
-//    @NotBlank(message = "invalid code")
+    @NotBlank(message = "Description is required")
     private String code;
 
-    @NotNull
+    @NotNull(message = "Date is required")
     private LocalDate date;
 
-    @NotNull
+    @NotNull(message = "Start time is required")
     private LocalTime startTime;
 
-    @NotNull
+    @NotNull(message = "End time is required")
     private LocalTime endTime;
 
     @NotNull
@@ -33,10 +33,9 @@ public class CompetitionDTO implements Serializable {
     @Max(30)
     private int numberOfParticipants = 3;
 
-    @NotBlank
     @Size(min = 3, max = 255)
     private String location;
 
-    @NotNull
+    @NotNull(message = "Amount is required")
     private Double amount;
 }
