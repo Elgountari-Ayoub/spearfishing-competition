@@ -64,7 +64,8 @@ public class GlobalExceptionHandler {
             RegistrationException.class,
             RankingNotFoundException.class,
             LevelNotFoundException.class,
-            FishNotFoundException.class
+            FishNotFoundException.class,
+            HuntingNotFoundException.class
     })
     public ResponseEntity<?> handleMemberNotFoundException(Exception ex) {
         Map<String, String> error = new HashMap<>();

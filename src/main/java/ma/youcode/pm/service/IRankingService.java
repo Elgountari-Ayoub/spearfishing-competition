@@ -15,7 +15,6 @@ public interface IRankingService {
 
     RankingDTO update(RankingId rankingId, RankingDTO rankingDTO);
 
-    //    RankingDTO update(RankingId rankingId);
     void delete(RankingId rankingId);
 
 }
