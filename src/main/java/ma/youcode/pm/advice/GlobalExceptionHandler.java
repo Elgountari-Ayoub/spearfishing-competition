@@ -62,6 +62,7 @@ public class GlobalExceptionHandler {
             MemberNotFoundException.class,
             CompetitionNotFoundException.class,
             RegistrationException.class,
+            RankingNotFoundException.class,
             LevelNotFoundException.class,
             FishNotFoundException.class
     })

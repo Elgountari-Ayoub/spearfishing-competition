@@ -38,14 +38,14 @@ public class RankingService implements IRankingService {
     @Override
     public RankingDTO findById(RankingId rankingId) {
         Ranking ranking = rankingRepository.findById(rankingId)
-                .orElseThrow(() -> new CompetitionNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode()));
+                .orElseThrow(() -> new RankingNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode() + ", and member number: " + rankingId.getMemberNum()));
         return modelMapper.map(ranking, RankingDTO.class);
     }
 
     @Override
     public Page<RankingDTO> finAll(Pageable pageable) {
-        Page<Competition> competitions = competitionRepository.findAll(pageable);
-        return competitions.map(competition -> modelMapper.map(competition, RankingDTO.class));
+        Page<Ranking> rankings = rankingRepository.findAll(pageable);
+        return rankings.map(ranking -> modelMapper.map(ranking, RankingDTO.class));
     }
 
     @Override
@@ -81,32 +81,23 @@ public class RankingService implements IRankingService {
 
     @Override
     public RankingDTO update(RankingId rankingId, RankingDTO rankingDTO) {
-        Competition competition = competitionRepository.findById(rankingId.getCompetitionCode())
-                .orElseThrow(() -> new CompetitionNotFoundException("Competition not found with code: " + rankingId.getCompetitionCode()));
+        Ranking ranking = rankingRepository.findById(rankingId)
+                .orElseThrow(() -> new RankingNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode() + ", and member number: " + rankingId.getMemberNum()));
 
-        Member member = memberRepository.findById(rankingId.getMemberNum())
-                .orElseThrow(() -> new CompetitionNotFoundException("Member not found with num: " + rankingId.getMemberNum()));
+        ranking.setRank(rankingDTO.getRank());
+        ranking.setScore(rankingDTO.getScore());
 
-        // Create ranking entry for the member in the competition
-        if (rankingRepository.existsRankingByCompetitionAndMember(competition, member)) {
-            throw new RegistrationException("Member is already registered for this competition.");
-        }
-
-        Ranking ranking = modelMapper.map(rankingDTO, Ranking.class);
-        ranking.setMember(member);
-        ranking.setCompetition(competition);
-
-        ranking = rankingRepository.save(ranking);
+        rankingRepository.save(ranking);
         return modelMapper.map(ranking, RankingDTO.class);
-
     }
 
 
     @Override
     public void delete(RankingId rankingId) {
-        Competition competition = competitionRepository.findById(rankingId.getCompetitionCode())
-                .orElseThrow(() -> new CompetitionNotFoundException("Competition not found with code: " + rankingId.getCompetitionCode()));
-        competitionRepository.delete(competition);
+        Ranking ranking = rankingRepository.findById(rankingId)
+                .orElseThrow(() -> new RankingNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode() + ", and member number: " + rankingId.getMemberNum()));
+
+        rankingRepository.delete(ranking);
     }
 
 }
