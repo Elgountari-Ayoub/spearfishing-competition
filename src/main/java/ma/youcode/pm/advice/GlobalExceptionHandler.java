@@ -59,7 +59,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             MemberNotFoundException.class,
             CompetitionNotFoundException.class,
-            RegistrationException.class
+            RegistrationException.class,
+            LevelNotFoundException.class
     })
     public ResponseEntity<?> handleMemberNotFoundException(Exception ex) {
         Map<String, String> error = new HashMap<>();
