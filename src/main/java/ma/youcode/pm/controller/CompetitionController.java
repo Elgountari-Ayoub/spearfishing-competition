@@ -66,7 +66,7 @@ public class CompetitionController {
 
     }
 
-    //TODO:  JOIN A MEMBER A COMPETITION
+    //TODO:  JOIN MEMBER A COMPETITION
     @PostMapping("/join")
     public ResponseEntity<CompetitionDTO> join(@RequestBody RankingDTO rankingDTO) {
         System.out.println(rankingDTO);

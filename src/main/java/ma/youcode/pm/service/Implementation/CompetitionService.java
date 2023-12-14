@@ -102,7 +102,6 @@ public class CompetitionService implements ICompetitionService {
         Competition competition = competitionRepository.findById(rankingDTO.getId().getCompetitionCode())
                 .orElseThrow(() -> new CompetitionNotFoundException("Competition not found"));
 
-        // Check if registration is allowed (24 hours before the start)
         LocalDate today = LocalDate.now();
         LocalDate competitionStartDate = competition.getDate();
         long daysDifference = ChronoUnit.DAYS.between(today, competitionStartDate);
@@ -111,7 +110,6 @@ public class CompetitionService implements ICompetitionService {
             throw new RegistrationException("Registration closed. It's less than 24 hours before the competition.");
         }
 
-        // Create ranking entry for the member in the competition
         if (rankingRepository.existsRankingByCompetitionAndMember(competition, member)){
             throw new RegistrationException("Member is already registered for this competition.");
         }
