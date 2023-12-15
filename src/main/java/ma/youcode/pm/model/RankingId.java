@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import ma.youcode.pm.dto.RankingDTO;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,8 +13,9 @@ import java.util.Date;
 @Data
 @Embeddable
 public class RankingId implements Serializable {
-    @NotNull
+    @NotNull(groups = RankingDTO.SaveValidationGroup.class)
     private Long memberNum;
-    @NotNull
+
+    @NotNull(groups = RankingDTO.SaveValidationGroup.class)
     private String competitionCode;
 }
