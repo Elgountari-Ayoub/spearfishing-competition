@@ -61,7 +61,9 @@ public class RankingService implements IRankingService {
         LocalDate competitionStartDate = competition.getDate();
         long daysDifference = ChronoUnit.DAYS.between(today, competitionStartDate);
 
-        if (daysDifference <= 1) {
+        if (daysDifference <= -1) {
+            throw new RegistrationException("Competition already passed");
+        } else if (daysDifference <= 1) {
             throw new RegistrationException("Registration closed. It's less than 24 hours before the competition.");
         }
 

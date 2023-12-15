@@ -31,9 +31,7 @@ public class RankingController {
 
     //TODO:  Ranking Creation
     @PostMapping
-//    public ResponseEntity<RankingDTO> save(@Validated(RankingDTO.SaveValidationGroup.class) @RequestBody RankingDTO rankingDTO) {
     public ResponseEntity<RankingDTO> save(@Validated(RankingDTO.SaveValidationGroup.class) @RequestBody RankingDTO rankingDTO) {
-        System.out.println("hello");
         RankingDTO createdRanking = rankingService.save(rankingDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRanking);
     }
@@ -53,7 +51,7 @@ public class RankingController {
     //TODO:  Find All Rankings
     @GetMapping
     public ResponseEntity<Page<RankingDTO>> findAll(Pageable pageable) {
-        
+
         Page<RankingDTO> rankings = rankingService.finAll(pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(rankings);
     }

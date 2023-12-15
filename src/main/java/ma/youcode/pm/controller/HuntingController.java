@@ -25,7 +25,7 @@ public class HuntingController {
 
     //TODO:  Hunting Creation
     @PostMapping
-    public ResponseEntity<HuntingDTO> save(@RequestBody HuntingDTO huntingDTO) {
+    public ResponseEntity<HuntingDTO> save(@Valid @RequestBody HuntingDTO huntingDTO) {
         HuntingDTO createdHunting = huntingService.save(huntingDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHunting);
     }
@@ -51,7 +51,6 @@ public class HuntingController {
     public ResponseEntity<HuntingDTO> update(@PathVariable long id, @Valid @RequestBody HuntingDTO huntingDTO) {
         HuntingDTO updatedHunting = huntingService.update(id, huntingDTO);
         return ResponseEntity.ok(updatedHunting);
-
     }
 
     //TODO:  Delete Hunting

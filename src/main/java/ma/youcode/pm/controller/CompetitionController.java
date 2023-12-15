@@ -92,11 +92,8 @@ public class CompetitionController {
 
     //TODO:  JOIN MEMBER A COMPETITION
     @PostMapping("/join")
-    public ResponseEntity<CompetitionDTO> join(@RequestBody RankingDTO rankingDTO) {
-        System.out.println(rankingDTO);
+    public ResponseEntity<RankingDTO> join(@Validated(RankingDTO.SaveValidationGroup.class) @RequestBody RankingDTO rankingDTO) {
         CompetitionDTO competitionDTO = competitionService.join(rankingDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
-
     }
-
 }

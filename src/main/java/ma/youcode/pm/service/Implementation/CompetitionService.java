@@ -62,7 +62,7 @@ public class CompetitionService implements ICompetitionService {
     public CompetitionDTO findTodayCompetition() {
         LocalDate currentDate = LocalDate.now();
         Competition competition = competitionRepository.findByDateEquals(currentDate);
-        if (competition == null){
+        if (competition == null) {
             return new CompetitionDTO();
         }
         return modelMapper.map(competition, CompetitionDTO.class);
@@ -126,7 +126,9 @@ public class CompetitionService implements ICompetitionService {
         LocalDate competitionStartDate = competition.getDate();
         long daysDifference = ChronoUnit.DAYS.between(today, competitionStartDate);
 
-        if (daysDifference <= 1) {
+        if (daysDifference <= -1) {
+            throw new RegistrationException("Competition already passed");
+        } else if (daysDifference <= 1) {
             throw new RegistrationException("Registration closed. It's less than 24 hours before the competition.");
         }
 

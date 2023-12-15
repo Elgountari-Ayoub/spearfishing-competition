@@ -1,8 +1,6 @@
 package ma.youcode.pm.service.Implementation;
 
-import ma.youcode.pm.dto.HuntingDTO;
-import ma.youcode.pm.dto.MemberDTO;
-import ma.youcode.pm.dto.RankingDTO;
+import ma.youcode.pm.dto.*;
 import ma.youcode.pm.exception.*;
 import ma.youcode.pm.model.*;
 import ma.youcode.pm.repository.ICompetitionRepository;
@@ -28,13 +26,16 @@ public class HuntingService implements IHuntingService {
     CompetitionService competitionService;
     RankingService rankingService;
     FishService fishService;
+    LevelService levelService;
 
 
     private final ModelMapper modelMapper;
 
     public HuntingService(
             ModelMapper modelMapper, IHuntingRepository huntingRepository,
-            MemberService memberService, CompetitionService competitionService, RankingService rankingService, FishService fishService
+            MemberService memberService, CompetitionService competitionService,
+            RankingService rankingService, FishService fishService,
+            LevelService levelService
     ) {
         this.modelMapper = modelMapper;
         this.competitionService = competitionService;
@@ -42,6 +43,7 @@ public class HuntingService implements IHuntingService {
         this.huntingRepository = huntingRepository;
         this.rankingService = rankingService;
         this.fishService = fishService;
+        this.levelService = levelService;
     }
 
     @Override
@@ -71,18 +73,20 @@ public class HuntingService implements IHuntingService {
             throw new RegistrationException("Cannot insert hunting. Competition is not playing today.");
         }
 
-        fishService.findById(huntingDTO.getFish().getId());
+        FishDTO fishDTO = fishService.findById(huntingDTO.getFish().getId());
 
         Hunting hunting = huntingRepository.findByCompetitionAndMemberAndFish(huntingDTO.getCompetition(), huntingDTO.getMember(), huntingDTO.getFish());
+        // if the hunting exist, update the number of fish
         if (hunting != null) {
             huntingDTO.setNumberOfFish(hunting.getNumberOfFish() + huntingDTO.getNumberOfFish());
         }
+        //else, save a new hunting
         hunting = modelMapper.map(huntingDTO, Hunting.class);
         huntingRepository.save(hunting);
 
         //TODO:  Update the ranking
-        //here...
-
+        //here..
+        LevelDTO levelDTO = levelService.findById(fishDTO.getId());
 
         return modelMapper.map(hunting, HuntingDTO.class);
     }
