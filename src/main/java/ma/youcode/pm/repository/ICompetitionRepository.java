@@ -6,12 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface ICompetitionRepository extends JpaRepository<Competition, String> {
     boolean existsByCode(String code);
     boolean existsByDate(LocalDate date);
-//    Optional<Competition> findByCode(String code);
+
+    List<Competition> findByDateLessThan(LocalDate currentDate);
+
+    Competition findByDateEquals(LocalDate currentDate);
+
+    List<Competition> findByDateGreaterThan(LocalDate currentDate);
 
 }

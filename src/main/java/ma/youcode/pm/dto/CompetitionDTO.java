@@ -16,7 +16,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompetitionDTO implements Serializable {
-    @NotBlank(message = "Description is required")
+//    @NotBlank(message = "Code is required")
+    @NotBlank(groups = UpdateValidationGroup.class, message = "Code is required")
     private String code;
 
     @NotNull(message = "Date is required")
@@ -31,11 +32,13 @@ public class CompetitionDTO implements Serializable {
     @NotNull
     @Min(3)
     @Max(30)
-    private int numberOfParticipants = 3;
+    private int numberOfParticipants;
 
     @Size(min = 3, max = 255)
     private String location;
 
     @NotNull(message = "Amount is required")
     private Double amount;
+
+    public interface UpdateValidationGroup {}
 }

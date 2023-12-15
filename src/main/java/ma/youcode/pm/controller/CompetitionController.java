@@ -10,7 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/competitions")
@@ -49,9 +52,34 @@ public class CompetitionController {
         return ResponseEntity.status(HttpStatus.FOUND).body(competitions);
     }
 
+
+    //TODO:  Find Passed Competitions
+    @GetMapping("/passed")
+    public ResponseEntity<List<CompetitionDTO>> findPassedCompetitions() {
+        List<CompetitionDTO> competitionsDTO = competitionService.findPassedCompetitions();
+        return ResponseEntity.status(HttpStatus.FOUND).body(competitionsDTO);
+    }
+
+    //TODO:  Find Today Competition
+    @GetMapping("/today")
+    public ResponseEntity<CompetitionDTO> findTodayCompetition() {
+        CompetitionDTO competitionDTO = competitionService.findTodayCompetition();
+        return ResponseEntity.status(HttpStatus.FOUND).body(competitionDTO);
+    }
+
+    //TODO:  Find Upcoming Competitions
+    @GetMapping("/upcoming")
+    public ResponseEntity<List<CompetitionDTO>> getUpcomingCompetitions() {
+        List<CompetitionDTO> competitionsDTO = competitionService.findUpcomingCompetitions();
+        return ResponseEntity.status(HttpStatus.FOUND).body(competitionsDTO);
+    }
+
+
     //TODO:  Update Competition
     @PutMapping(value = "/{code}")
-    public ResponseEntity<CompetitionDTO> update(@PathVariable String code, @Valid @RequestBody CompetitionDTO competitionDTO) {
+    public ResponseEntity<CompetitionDTO> update(
+            @PathVariable String code,
+            @Validated(CompetitionDTO.UpdateValidationGroup.class) @RequestBody CompetitionDTO competitionDTO) {
         CompetitionDTO updatedCompetition = competitionService.update(code, competitionDTO);
         return ResponseEntity.ok(updatedCompetition);
 

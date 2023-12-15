@@ -80,6 +80,9 @@ public class HuntingService implements IHuntingService {
         hunting = modelMapper.map(huntingDTO, Hunting.class);
         huntingRepository.save(hunting);
 
+        //TODO:  Update the ranking
+        //here...
+
         return modelMapper.map(hunting, HuntingDTO.class);
     }
 

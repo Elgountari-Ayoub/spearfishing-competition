@@ -63,5 +63,4 @@ public class HuntingController {
         huntingService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 }

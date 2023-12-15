@@ -39,7 +39,7 @@ public class RankingController {
     //TODO:  Find Ranking By RankingId
     @GetMapping("/{memberNum}/{competitionCode}")
     public ResponseEntity<RankingDTO> findByNum(
-            @PathVariable  long memberNum,
+            @PathVariable long memberNum,
             @PathVariable String competitionCode) {
         RankingId rankingId = new RankingId();
         rankingId.setMemberNum(memberNum);

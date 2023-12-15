@@ -22,6 +22,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompetitionService implements ICompetitionService {
@@ -53,6 +55,30 @@ public class CompetitionService implements ICompetitionService {
     public Page<CompetitionDTO> finAll(Pageable pageable) {
         Page<Competition> competitions = competitionRepository.findAll(pageable);
         return competitions.map(competition -> modelMapper.map(competition, CompetitionDTO.class));
+    }
+
+    @Override
+    public List<CompetitionDTO> findPassedCompetitions() {
+        LocalDate currentDate = LocalDate.now();
+        List<Competition> competitions = competitionRepository.findByDateLessThan(currentDate);
+        return competitions.stream().map(competition -> modelMapper.map(competition, CompetitionDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public CompetitionDTO findTodayCompetition() {
+        LocalDate currentDate = LocalDate.now();
+        Competition competition = competitionRepository.findByDateEquals(currentDate);
+        if (competition == null){
+            return new CompetitionDTO();
+        }
+        return modelMapper.map(competition, CompetitionDTO.class);
+    }
+
+    @Override
+    public List<CompetitionDTO> findUpcomingCompetitions() {
+        LocalDate currentDate = LocalDate.now();
+        List<Competition> competitions = competitionRepository.findByDateGreaterThan(currentDate);
+        return competitions.stream().map(competition -> modelMapper.map(competition, CompetitionDTO.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -110,7 +136,7 @@ public class CompetitionService implements ICompetitionService {
             throw new RegistrationException("Registration closed. It's less than 24 hours before the competition.");
         }
 
-        if (rankingRepository.existsRankingByCompetitionAndMember(competition, member)){
+        if (rankingRepository.existsRankingByCompetitionAndMember(competition, member)) {
             throw new RegistrationException("Member is already registered for this competition.");
         }
 
