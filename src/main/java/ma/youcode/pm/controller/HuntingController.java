@@ -1,9 +1,8 @@
 package ma.youcode.pm.controller;
 
 import jakarta.validation.Valid;
-import ma.youcode.pm.dto.RankingDTO;
-import ma.youcode.pm.model.RankingId;
-import ma.youcode.pm.service.Implementation.RankingService;
+import ma.youcode.pm.dto.HuntingDTO;
+import ma.youcode.pm.service.Implementation.HuntingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,64 +13,54 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/rankings")
+@RequestMapping("/api/v1/huntings")
 public class HuntingController {
 
-    RankingService rankingService;
+    HuntingService huntingService;
 
     @Autowired
-    public HuntingController(RankingService rankingService) {
-        this.rankingService = rankingService;
+    public HuntingController(HuntingService huntingService) {
+        this.huntingService = huntingService;
     }
 
-    //TODO:  Ranking Creation
+    //TODO:  Hunting Creation
     @PostMapping
-    public ResponseEntity<RankingDTO> save(@Validated(RankingDTO.SaveValidationGroup.class) @RequestBody RankingDTO rankingDTO) {
-        RankingDTO createdRanking = rankingService.save(rankingDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdRanking);
+    public ResponseEntity<HuntingDTO> save(@RequestBody HuntingDTO huntingDTO) {
+        HuntingDTO createdHunting = huntingService.save(huntingDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdHunting);
     }
 
-    //TODO:  Find Ranking By RankingId
-    @GetMapping("/{memberNum}/{competitionCode}")
-    public ResponseEntity<RankingDTO> findByNum(
-            @PathVariable  long memberNum,
-            @PathVariable String competitionCode) {
-        RankingId rankingId = new RankingId();
-        rankingId.setMemberNum(memberNum);
-        rankingId.setCompetitionCode(competitionCode);
-        RankingDTO rankingDTO = rankingService.findById(rankingId);
-        return ResponseEntity.status(HttpStatus.FOUND).body(rankingDTO);
+    //TODO:  Find Hunting By id
+    @GetMapping("/{id}")
+    public ResponseEntity<HuntingDTO> findByNum(
+            @PathVariable long id) {
+        HuntingDTO huntingDTO = huntingService.findById(id);
+        return ResponseEntity.status(HttpStatus.FOUND).body(huntingDTO);
     }
 
-    //TODO:  Find All Rankings
+    //TODO:  Find All Huntings
     @GetMapping
-    public ResponseEntity<Page<RankingDTO>> findAll(
+    public ResponseEntity<Page<HuntingDTO>> findAll(
             @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
             @RequestParam(name = "pageSize", defaultValue = "10") int pageSize
     ) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<RankingDTO> rankings = rankingService.finAll(pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(rankings);
+        Page<HuntingDTO> huntings = huntingService.finAll(pageable);
+        return ResponseEntity.status(HttpStatus.FOUND).body(huntings);
     }
 
-    //TODO:  Update Ranking
-    @PutMapping(value = "/{memberNum}/{competitionCode}")
-    public ResponseEntity<RankingDTO> update(@PathVariable long memberNum, @PathVariable String competitionCode, @Valid @RequestBody RankingDTO rankingDTO) {
-        RankingId rankingId = new RankingId();
-        rankingId.setMemberNum(memberNum);
-        rankingId.setCompetitionCode(competitionCode);
-        RankingDTO updatedRanking = rankingService.update(rankingId, rankingDTO);
-        return ResponseEntity.ok(updatedRanking);
+    //TODO:  Update Hunting
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<HuntingDTO> update(@PathVariable long id, @Valid @RequestBody HuntingDTO huntingDTO) {
+        HuntingDTO updatedHunting = huntingService.update(id, huntingDTO);
+        return ResponseEntity.ok(updatedHunting);
 
     }
 
-    //TODO:  Delete Ranking
-    @DeleteMapping(value = "/{memberNum}/{competitionCode}")
-    public ResponseEntity<RankingDTO> delete(@PathVariable long memberNum, @PathVariable String competitionCode) {
-        RankingId rankingId = new RankingId();
-        rankingId.setMemberNum(memberNum);
-        rankingId.setCompetitionCode(competitionCode);
-        rankingService.delete(rankingId);
+    //TODO:  Delete Hunting
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<HuntingDTO> delete(@PathVariable long id) {
+        huntingService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
