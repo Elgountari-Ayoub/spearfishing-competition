@@ -35,8 +35,8 @@ public class FishController {
     //TODO:  Find Fish By Id
     @GetMapping("/{id}")
     public ResponseEntity<FishDTO> findByCode(@PathVariable long id) {
-            FishDTO fishDTO = fishService.findById(id);
-            return ResponseEntity.status(HttpStatus.FOUND).body(fishDTO);
+        FishDTO fishDTO = fishService.findById(id);
+        return ResponseEntity.status(HttpStatus.FOUND).body(fishDTO);
     }
 
     //TODO: Search Fish by Name
@@ -48,11 +48,7 @@ public class FishController {
 
     //TODO:  Find All Fishes
     @GetMapping
-    public ResponseEntity<Page<FishDTO>> findAll(
-            @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
-            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize
-    ) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public ResponseEntity<Page<FishDTO>> findAll(Pageable pageable) {
         Page<FishDTO> levels = fishService.finAll(pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(levels);
     }

@@ -6,24 +6,18 @@ import ma.youcode.pm.exception.*;
 import ma.youcode.pm.model.Competition;
 import ma.youcode.pm.model.Member;
 import ma.youcode.pm.model.Ranking;
-import ma.youcode.pm.model.RankingId;
 import ma.youcode.pm.repository.ICompetitionRepository;
 import ma.youcode.pm.repository.IMemberRepository;
 import ma.youcode.pm.repository.IRankingRepository;
 import ma.youcode.pm.service.ICompetitionService;
 import ma.youcode.pm.util.CompetitionCodeGenerator;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CompetitionService implements ICompetitionService {
@@ -58,10 +52,10 @@ public class CompetitionService implements ICompetitionService {
     }
 
     @Override
-    public List<CompetitionDTO> findPassedCompetitions() {
+    public Page<CompetitionDTO> findPassedCompetitions(Pageable pageable) {
         LocalDate currentDate = LocalDate.now();
-        List<Competition> competitions = competitionRepository.findByDateLessThan(currentDate);
-        return competitions.stream().map(competition -> modelMapper.map(competition, CompetitionDTO.class)).collect(Collectors.toList());
+        Page<Competition> competitions = competitionRepository.findByDateLessThan(currentDate, pageable);
+        return competitions.map(competition -> modelMapper.map(competition, CompetitionDTO.class));
     }
 
     @Override
@@ -75,10 +69,10 @@ public class CompetitionService implements ICompetitionService {
     }
 
     @Override
-    public List<CompetitionDTO> findUpcomingCompetitions() {
+    public Page<CompetitionDTO> findUpcomingCompetitions(Pageable pageable) {
         LocalDate currentDate = LocalDate.now();
-        List<Competition> competitions = competitionRepository.findByDateGreaterThan(currentDate);
-        return competitions.stream().map(competition -> modelMapper.map(competition, CompetitionDTO.class)).collect(Collectors.toList());
+        Page<Competition> competitions = competitionRepository.findByDateGreaterThan(currentDate, pageable);
+        return competitions.map(competition -> modelMapper.map(competition, CompetitionDTO.class));
     }
 
     @Override

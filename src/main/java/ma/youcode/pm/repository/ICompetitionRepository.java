@@ -2,6 +2,8 @@ package ma.youcode.pm.repository;
 
 import ma.youcode.pm.model.Competition;
 import ma.youcode.pm.model.Member;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,10 +16,10 @@ public interface ICompetitionRepository extends JpaRepository<Competition, Strin
     boolean existsByCode(String code);
     boolean existsByDate(LocalDate date);
 
-    List<Competition> findByDateLessThan(LocalDate currentDate);
+    Page<Competition> findByDateLessThan(LocalDate currentDate, Pageable pageable);
 
     Competition findByDateEquals(LocalDate currentDate);
 
-    List<Competition> findByDateGreaterThan(LocalDate currentDate);
+    Page<Competition> findByDateGreaterThan(LocalDate currentDate, Pageable pageable);
 
 }

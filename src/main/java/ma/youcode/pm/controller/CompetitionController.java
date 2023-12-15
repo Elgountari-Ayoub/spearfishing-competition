@@ -43,11 +43,7 @@ public class CompetitionController {
 
     //TODO:  Find All Competitions
     @GetMapping
-    public ResponseEntity<Page<CompetitionDTO>> findAllCompetitions(
-            @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
-            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize
-    ) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public ResponseEntity<Page<CompetitionDTO>> findAllCompetitions(Pageable pageable) {
         Page<CompetitionDTO> competitions = competitionService.finAll(pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(competitions);
     }
@@ -55,8 +51,8 @@ public class CompetitionController {
 
     //TODO:  Find Passed Competitions
     @GetMapping("/passed")
-    public ResponseEntity<List<CompetitionDTO>> findPassedCompetitions() {
-        List<CompetitionDTO> competitionsDTO = competitionService.findPassedCompetitions();
+    public ResponseEntity<Page<CompetitionDTO>>  findPassedCompetitions(Pageable pageable) {
+        Page<CompetitionDTO> competitionsDTO = competitionService.findPassedCompetitions(pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(competitionsDTO);
     }
 
@@ -69,8 +65,8 @@ public class CompetitionController {
 
     //TODO:  Find Upcoming Competitions
     @GetMapping("/upcoming")
-    public ResponseEntity<List<CompetitionDTO>> getUpcomingCompetitions() {
-        List<CompetitionDTO> competitionsDTO = competitionService.findUpcomingCompetitions();
+    public ResponseEntity<Page<CompetitionDTO>>  getUpcomingCompetitions(Pageable pageable) {
+        Page<CompetitionDTO> competitionsDTO = competitionService.findUpcomingCompetitions(pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(competitionsDTO);
     }
 

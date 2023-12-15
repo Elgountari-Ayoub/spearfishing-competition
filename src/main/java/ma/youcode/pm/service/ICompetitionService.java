@@ -10,12 +10,9 @@ import java.util.List;
 public interface ICompetitionService {
     CompetitionDTO findByCode(String code);
     Page<CompetitionDTO> finAll(Pageable pageable);
-
-    List<CompetitionDTO> findPassedCompetitions() ;
-
+    Page<CompetitionDTO> findPassedCompetitions(Pageable pageable);
     CompetitionDTO findTodayCompetition();
-
-    List<CompetitionDTO> findUpcomingCompetitions();
+    Page<CompetitionDTO> findUpcomingCompetitions(Pageable pageable);
     CompetitionDTO save(CompetitionDTO CompetitionDTO);
     CompetitionDTO update(String code, CompetitionDTO CompetitionDTO);
     void delete(String code);
