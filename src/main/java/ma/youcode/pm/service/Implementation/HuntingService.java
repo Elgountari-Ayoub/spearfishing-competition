@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class HuntingService implements IHuntingService {
@@ -70,23 +71,30 @@ public class HuntingService implements IHuntingService {
         LocalDate today = LocalDate.now();
         LocalDate competitionDate = rankingDTO.getCompetition().getDate();
         if (!today.isEqual(competitionDate)) {
-            throw new RegistrationException("Cannot insert hunting. Competition is not playing today.");
+//            throw new RegistrationException("Cannot insert hunting. Competition is not playing today.");
         }
 
         FishDTO fishDTO = fishService.findById(huntingDTO.getFish().getId());
 
-        Hunting hunting = huntingRepository.findByCompetitionAndMemberAndFish(huntingDTO.getCompetition(), huntingDTO.getMember(), huntingDTO.getFish());
+       Hunting hunting = huntingRepository.findByCompetitionAndMemberAndFish(huntingDTO.getCompetition(), huntingDTO.getMember(), huntingDTO.getFish());
         // if the hunting exist, update the number of fish
         if (hunting != null) {
-            huntingDTO.setNumberOfFish(hunting.getNumberOfFish() + huntingDTO.getNumberOfFish());
+            huntingDTO.setId(hunting.getId());
+            hunting.setNumberOfFish(hunting.getNumberOfFish() + huntingDTO.getNumberOfFish());
         }
         //else, save a new hunting
-        hunting = modelMapper.map(huntingDTO, Hunting.class);
-        huntingRepository.save(hunting);
+        hunting = huntingRepository.save(hunting);
 
         //TODO:  Update the ranking
-        //here..
         LevelDTO levelDTO = levelService.findById(fishDTO.getId());
+        List<Hunting> huntings = huntingRepository.findByCompetitionAndMember(rankingDTO.getCompetition(), rankingDTO.getMember());
+        System.out.println(huntings.stream().count());
+        int score = 0;
+        for (Hunting huntingItem: huntings){
+            score += huntingItem.getNumberOfFish() * huntingItem.getFish().getLevel().getPoints();
+        }
+        rankingDTO.setScore(score);
+        rankingService.update(rankingId, rankingDTO);
 
         return modelMapper.map(hunting, HuntingDTO.class);
     }

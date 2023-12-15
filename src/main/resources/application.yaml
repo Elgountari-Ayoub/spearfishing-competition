@@ -2,7 +2,7 @@ spring:
   datasource:
     username: postgres
 #    ESD2023 || 2002pm
-    password: 2002pm
+    password: ESD2023
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/spearfishing-competition-db
   jpa:

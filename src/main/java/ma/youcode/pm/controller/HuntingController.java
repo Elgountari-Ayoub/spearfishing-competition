@@ -25,7 +25,7 @@ public class HuntingController {
 
     //TODO:  Hunting Creation
     @PostMapping
-    public ResponseEntity<HuntingDTO> save(@Valid @RequestBody HuntingDTO huntingDTO) {
+    public ResponseEntity<HuntingDTO> save(@Validated(HuntingDTO.SaveValidationGroup.class) @RequestBody HuntingDTO huntingDTO) {
         HuntingDTO createdHunting = huntingService.save(huntingDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHunting);
     }

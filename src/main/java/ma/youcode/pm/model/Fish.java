@@ -1,7 +1,10 @@
 package ma.youcode.pm.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import ma.youcode.pm.dto.HuntingDTO;
+import ma.youcode.pm.dto.RankingDTO;
 
 import java.util.Date;
 
@@ -11,6 +14,7 @@ import java.util.Date;
 public class Fish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = HuntingDTO.SaveValidationGroup.class)
     private Long id;
 
     @Column(unique = true, nullable = false)

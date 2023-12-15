@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import ma.youcode.pm.dto.HuntingDTO;
 import ma.youcode.pm.enums.IdentityDocumentType;
 
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.util.List;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = HuntingDTO.SaveValidationGroup.class)
     private Long num;
 
     private String name;
