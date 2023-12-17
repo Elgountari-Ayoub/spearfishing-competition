@@ -38,7 +38,7 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public Page<MemberDTO> finAll(Pageable pageable) {
+    public Page<MemberDTO> findAll(Pageable pageable) {
         Page<Member> members = memberRepository.findAll(pageable);
         return members.map(member -> modelMapper.map(member, MemberDTO.class));
     }

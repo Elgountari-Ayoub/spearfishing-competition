@@ -43,8 +43,8 @@ public class RankingService implements IRankingService {
     }
 
     @Override
-    public Page<RankingDTO> finAll(Pageable pageable) {
-        Page<Ranking> rankings = rankingRepository.findAll(pageable);
+    public Page<RankingDTO> findAll(Pageable pageable) {
+        Page<Ranking> rankings = rankingRepository.findAllByOrderByScoreDesc(pageable);
         return rankings.map(ranking -> modelMapper.map(ranking, RankingDTO.class));
     }
 

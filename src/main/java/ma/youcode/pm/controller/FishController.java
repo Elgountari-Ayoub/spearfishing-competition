@@ -49,7 +49,7 @@ public class FishController {
     //TODO:  Find All Fishes
     @GetMapping
     public ResponseEntity<Page<FishDTO>> findAll(Pageable pageable) {
-        Page<FishDTO> levels = fishService.finAll(pageable);
+        Page<FishDTO> levels = fishService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(levels);
     }
 

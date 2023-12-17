@@ -14,7 +14,7 @@ import java.util.Date;
 public class Fish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(groups = HuntingDTO.SaveValidationGroup.class)
+    @NotNull
     private Long id;
 
     @Column(unique = true, nullable = false)

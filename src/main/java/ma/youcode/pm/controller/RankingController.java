@@ -52,7 +52,7 @@ public class RankingController {
     @GetMapping
     public ResponseEntity<Page<RankingDTO>> findAll(Pageable pageable) {
 
-        Page<RankingDTO> rankings = rankingService.finAll(pageable);
+        Page<RankingDTO> rankings = rankingService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(rankings);
     }
 

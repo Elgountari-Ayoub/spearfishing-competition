@@ -22,18 +22,17 @@ public class HuntingDTO {
     private Long id;
 
     @Positive(message = "number of fish must be positive")
-    private int numberOfFish = 1;
+    private int numberOfFish;
 
     @NotNull(message = "Member is required")
-    @NotNull(message = "Member is required", groups = SaveValidationGroup.class)
     @Valid
     private Member member;
 
-    @NotNull(message = "Competition is required", groups = SaveValidationGroup.class)
+    @NotNull(message = "Competition is required")
     @Valid
     private Competition competition;
 
-    @NotNull(message = "Fish is required", groups = SaveValidationGroup.class)
+    @NotNull(message = "Fish is required")
     @Valid
     private Fish fish;
     public interface SaveValidationGroup {}

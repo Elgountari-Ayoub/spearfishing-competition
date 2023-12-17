@@ -41,7 +41,7 @@ public class LevelController {
     @GetMapping
     public ResponseEntity<Page<LevelDTO>> findAll(Pageable pageable) {
         
-        Page<LevelDTO> levels = levelService.finAll(pageable);
+        Page<LevelDTO> levels = levelService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(levels);
     }
 

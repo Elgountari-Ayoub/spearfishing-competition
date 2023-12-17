@@ -55,7 +55,7 @@ public class HuntingService implements IHuntingService {
     }
 
     @Override
-    public Page<HuntingDTO> finAll(Pageable pageable) {
+    public Page<HuntingDTO> findAll(Pageable pageable) {
         Page<Hunting> huntings = huntingRepository.findAll(pageable);
         return huntings.map(hunting -> modelMapper.map(hunting, HuntingDTO.class));
     }
@@ -65,7 +65,6 @@ public class HuntingService implements IHuntingService {
         RankingId rankingId = new RankingId();
         rankingId.setCompetitionCode(huntingDTO.getCompetition().getCode());
         rankingId.setMemberNum(huntingDTO.getMember().getNum());
-
         RankingDTO rankingDTO = rankingService.findById(rankingId);
 
         LocalDate today = LocalDate.now();
@@ -74,26 +73,27 @@ public class HuntingService implements IHuntingService {
 //            throw new RegistrationException("Cannot insert hunting. Competition is not playing today.");
         }
 
-        FishDTO fishDTO = fishService.findById(huntingDTO.getFish().getId());
-
-       Hunting hunting = huntingRepository.findByCompetitionAndMemberAndFish(huntingDTO.getCompetition(), huntingDTO.getMember(), huntingDTO.getFish());
-        // if the hunting exist, update the number of fish
+        Hunting hunting = huntingRepository.findByCompetitionAndMemberAndFish(huntingDTO.getCompetition(), huntingDTO.getMember(), huntingDTO.getFish());
         if (hunting != null) {
-            huntingDTO.setId(hunting.getId());
             hunting.setNumberOfFish(hunting.getNumberOfFish() + huntingDTO.getNumberOfFish());
+        } else {
+            hunting = modelMapper.map(huntingDTO, Hunting.class);
         }
-        //else, save a new hunting
-        hunting = huntingRepository.save(hunting);
+        huntingRepository.save(hunting);
 
         //TODO:  Update the ranking
-        LevelDTO levelDTO = levelService.findById(fishDTO.getId());
-        List<Hunting> huntings = huntingRepository.findByCompetitionAndMember(rankingDTO.getCompetition(), rankingDTO.getMember());
-        System.out.println(huntings.stream().count());
-        int score = 0;
-        for (Hunting huntingItem: huntings){
-            score += huntingItem.getNumberOfFish() * huntingItem.getFish().getLevel().getPoints();
-        }
-        rankingDTO.setScore(score);
+        FishDTO fishDTO = fishService.findById(hunting.getFish().getId());
+
+        int points = huntingDTO.getNumberOfFish() * fishDTO.getLevel().getPoints();
+        System.out.println(points);
+//        List<Hunting> huntings = huntingRepository.findByCompetitionAndMember(rankingDTO.getCompetition(), rankingDTO.getMember());
+//        System.out.println(huntings.size());
+//        int score = 0;
+//        for (Hunting huntingItem : huntings) {
+//            System.out.println(huntingItem.getFish());
+//            score += huntingItem.getNumberOfFish() * huntingItem.getFish().getLevel().getPoints();
+//        }
+        rankingDTO.setScore(rankingDTO.getScore() + points);
         rankingService.update(rankingId, rankingDTO);
 
         return modelMapper.map(hunting, HuntingDTO.class);
@@ -130,7 +130,7 @@ public class HuntingService implements IHuntingService {
     @Override
     public void delete(long id) {
         Hunting hunting = huntingRepository.findById(id)
-                .orElseThrow(()->  new HuntingNotFoundException("Hunting not found!"));
+                .orElseThrow(() -> new HuntingNotFoundException("Hunting not found!"));
         huntingRepository.delete(hunting);
     }
 

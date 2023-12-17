@@ -41,7 +41,7 @@ public class MemberController {
     @GetMapping
     public ResponseEntity<Page<MemberDTO>> findAll(Pageable pageable) {
         
-        Page<MemberDTO> members = memberService.finAll(pageable);
+        Page<MemberDTO> members = memberService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(members);
     }
 

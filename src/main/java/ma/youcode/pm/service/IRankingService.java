@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface IRankingService {
     RankingDTO findById(RankingId rankingId);
-    Page<RankingDTO> finAll(Pageable pageable);
+    Page<RankingDTO> findAll(Pageable pageable);
     RankingDTO save(RankingDTO RankingDTO);
 
     RankingDTO update(RankingId rankingId, RankingDTO rankingDTO);

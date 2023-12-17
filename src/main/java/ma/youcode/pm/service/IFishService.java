@@ -10,7 +10,7 @@ import java.util.List;
 public interface IFishService {
     FishDTO findById(long id);
     List<FishDTO> searchByName(String name);
-    Page<FishDTO> finAll(Pageable pageable);
+    Page<FishDTO> findAll(Pageable pageable);
     FishDTO save(FishDTO FishDTO);
     FishDTO update(long id, FishDTO fishDTO);
 

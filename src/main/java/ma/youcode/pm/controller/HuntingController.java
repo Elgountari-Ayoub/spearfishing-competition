@@ -25,7 +25,7 @@ public class HuntingController {
 
     //TODO:  Hunting Creation
     @PostMapping
-    public ResponseEntity<HuntingDTO> save(@Validated(HuntingDTO.SaveValidationGroup.class) @RequestBody HuntingDTO huntingDTO) {
+    public ResponseEntity<HuntingDTO> save(@Valid @RequestBody HuntingDTO huntingDTO) {
         HuntingDTO createdHunting = huntingService.save(huntingDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHunting);
     }
@@ -42,7 +42,7 @@ public class HuntingController {
     @GetMapping
     public ResponseEntity<Page<HuntingDTO>> findAll(Pageable pageable) {
         
-        Page<HuntingDTO> huntings = huntingService.finAll(pageable);
+        Page<HuntingDTO> huntings = huntingService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(huntings);
     }
 

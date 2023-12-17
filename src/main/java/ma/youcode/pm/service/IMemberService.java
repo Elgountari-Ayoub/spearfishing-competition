@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface IMemberService {
     MemberDTO finByNum(long num);
-    Page<MemberDTO> finAll(Pageable pageable);
+    Page<MemberDTO> findAll(Pageable pageable);
     MemberDTO save(MemberDTO memberDTO);
     MemberDTO update(long num, MemberDTO memberDTO);
     void delete(long num);

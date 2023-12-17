@@ -33,7 +33,7 @@ public class LevelService implements ILevelService {
     }
 
     @Override
-    public Page<LevelDTO> finAll(Pageable pageable) {
+    public Page<LevelDTO> findAll(Pageable pageable) {
         Page<Level> levels = levelRepository.findAll(pageable);
         return levels.map(level -> modelMapper.map(level, LevelDTO.class));
     }

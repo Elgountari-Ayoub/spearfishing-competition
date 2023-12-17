@@ -17,8 +17,8 @@ public class Ranking {
 
     @ManyToOne
     @MapsId("memberNum")
+
     @JoinColumn(name = "member_num", referencedColumnName = "num")
-    
     private Member member;
 
     @ManyToOne

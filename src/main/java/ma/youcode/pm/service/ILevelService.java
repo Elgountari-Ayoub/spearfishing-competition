@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ILevelService {
     LevelDTO findById(Long code);
-    Page<LevelDTO> finAll(Pageable pageable);
+    Page<LevelDTO> findAll(Pageable pageable);
     LevelDTO save(LevelDTO LevelDTO);
     LevelDTO update(Long code, LevelDTO levelDTO);
     void delete(Long code);

@@ -1,6 +1,7 @@
 package ma.youcode.pm.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -18,7 +20,7 @@ import java.util.List;
 public class Competition {
     @Id
     @Column(nullable = false)
-    @NotNull(groups = HuntingDTO.SaveValidationGroup.class)
+    @NotNull
     private String code;
 
     private LocalDate date;

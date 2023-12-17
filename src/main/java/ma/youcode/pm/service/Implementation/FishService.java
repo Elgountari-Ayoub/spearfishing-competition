@@ -45,7 +45,7 @@ public class FishService implements IFishService {
     }
 
     @Override
-    public Page<FishDTO> finAll(Pageable pageable) {
+    public Page<FishDTO> findAll(Pageable pageable) {
         Page<Fish> fishs = fishRepository.findAll(pageable);
         return fishs.map(fish -> modelMapper.map(fish, FishDTO.class));
     }
