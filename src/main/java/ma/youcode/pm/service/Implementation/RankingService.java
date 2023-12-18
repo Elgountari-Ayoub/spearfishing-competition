@@ -86,10 +86,9 @@ public class RankingService implements IRankingService {
         Ranking ranking = rankingRepository.findById(rankingId)
                 .orElseThrow(() -> new RankingNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode() + ", and member number: " + rankingId.getMemberNum()));
 
-        ranking.setRank(rankingDTO.getRank());
         ranking.setScore(rankingDTO.getScore());
-
         rankingRepository.save(ranking);
+
         return modelMapper.map(ranking, RankingDTO.class);
     }
 

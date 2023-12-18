@@ -19,6 +19,8 @@ public interface IRankingRepository extends JpaRepository<Ranking, RankingId> {
     Page<Ranking> findByCompetition(Competition competition, Pageable pageable);
     int countRankingByCompetition(Competition  competition);
     Page<Ranking> findByMember(Member member, Pageable pageable);
-    Page<Ranking> findByCompetitionOrderByScore(Competition competition, Pageable pageable);
+    Page<Ranking> findByCompetitionOrderByScoreDesc(Competition competition, Pageable pageable);
+    List<Ranking> findByCompetitionOrderByScoreDesc(Competition competition);
     boolean existsByCompetitionCodeAndMemberNum(String competitionCode, long memberNum);
+
 }

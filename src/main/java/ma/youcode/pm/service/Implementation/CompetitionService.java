@@ -59,7 +59,7 @@ public class CompetitionService implements ICompetitionService {
         CompetitionDTO competitionDTO = findByCode(code);
         Competition competition = modelMapper.map(competitionDTO, Competition.class);
 
-        Page<Ranking> rankings = rankingRepository.findByCompetition(competition, pageable);
+        Page<Ranking> rankings = rankingRepository.findByCompetitionOrderByScoreDesc(competition, pageable);
 
         CompetitionRankingsResponse competitionRankingsResponse = new CompetitionRankingsResponse();
         competitionRankingsResponse.setCompetition(competition);
@@ -162,7 +162,6 @@ public class CompetitionService implements ICompetitionService {
             Ranking ranking = modelMapper.map(rankingDTO, Ranking.class);
             ranking.setMember(member);
             ranking.setCompetition(competition);
-
             rankingRepository.save(ranking);
         }
         return modelMapper.map(competition, CompetitionDTO.class);

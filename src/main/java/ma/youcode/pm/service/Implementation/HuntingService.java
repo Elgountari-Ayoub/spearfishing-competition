@@ -28,6 +28,7 @@ public class HuntingService implements IHuntingService {
     RankingService rankingService;
     FishService fishService;
     LevelService levelService;
+    IRankingRepository rankingRepository;
 
 
     private final ModelMapper modelMapper;
@@ -36,6 +37,7 @@ public class HuntingService implements IHuntingService {
             ModelMapper modelMapper, IHuntingRepository huntingRepository,
             MemberService memberService, CompetitionService competitionService,
             RankingService rankingService, FishService fishService,
+            IRankingRepository rankingRepository,
             LevelService levelService
     ) {
         this.modelMapper = modelMapper;
@@ -44,6 +46,7 @@ public class HuntingService implements IHuntingService {
         this.huntingRepository = huntingRepository;
         this.rankingService = rankingService;
         this.fishService = fishService;
+        this.rankingRepository = rankingRepository;
         this.levelService = levelService;
     }
 
@@ -85,16 +88,19 @@ public class HuntingService implements IHuntingService {
         FishDTO fishDTO = fishService.findById(hunting.getFish().getId());
 
         int points = huntingDTO.getNumberOfFish() * fishDTO.getLevel().getPoints();
-        System.out.println(points);
-//        List<Hunting> huntings = huntingRepository.findByCompetitionAndMember(rankingDTO.getCompetition(), rankingDTO.getMember());
-//        System.out.println(huntings.size());
-//        int score = 0;
-//        for (Hunting huntingItem : huntings) {
-//            System.out.println(huntingItem.getFish());
-//            score += huntingItem.getNumberOfFish() * huntingItem.getFish().getLevel().getPoints();
-//        }
         rankingDTO.setScore(rankingDTO.getScore() + points);
         rankingService.update(rankingId, rankingDTO);
+
+        List<Ranking> rankings = rankingRepository.findByCompetitionOrderByScoreDesc(rankingDTO.getCompetition());
+
+
+        // Save the updated rankings to the database
+        rankingRepository.saveAll(rankings);
+        int rank = 1;
+        for (Ranking rankingItem : rankings) {
+            rankingItem.setRank(rank++);
+        }
+        rankingRepository.saveAll(rankings);
 
         return modelMapper.map(hunting, HuntingDTO.class);
     }
