@@ -153,15 +153,18 @@ public class CompetitionService implements ICompetitionService {
             throw new RegistrationException("Member is already registered for this competition.");
         }
 
-        Ranking ranking = modelMapper.map(rankingDTO, Ranking.class);
-        ranking.setMember(member);
-        ranking.setCompetition(competition);
+        // check the getNumberOfParticipants
+        int registerMembersCount = rankingRepository.countRankingByCompetition(competition);
+        ;
+        if (registerMembersCount == competition.getNumberOfParticipants()) {
+            throw new RegistrationException("This competition has reached the maximum members :<");
+        } else {
+            Ranking ranking = modelMapper.map(rankingDTO, Ranking.class);
+            ranking.setMember(member);
+            ranking.setCompetition(competition);
 
-        rankingRepository.save(ranking);
+            rankingRepository.save(ranking);
+        }
         return modelMapper.map(competition, CompetitionDTO.class);
-
     }
-
-    //    HELPER METHODS
-
 }
