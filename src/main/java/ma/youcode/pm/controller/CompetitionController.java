@@ -2,20 +2,16 @@ package ma.youcode.pm.controller;
 
 import jakarta.validation.Valid;
 import ma.youcode.pm.dto.CompetitionDTO;
-import ma.youcode.pm.dto.MemberDTO;
+import ma.youcode.pm.dto.CompetitionMembersResponse;
 import ma.youcode.pm.dto.RankingDTO;
-import ma.youcode.pm.model.Member;
 import ma.youcode.pm.service.Implementation.CompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/competitions")
@@ -52,9 +48,9 @@ public class CompetitionController {
 
     //TODO:  Find All Competitions Members
     @GetMapping("/{code}/members")
-    public ResponseEntity<Page<MemberDTO>> findAllCompetitionMembers(@PathVariable String code, Pageable pageable) {
-        Page<MemberDTO> members = competitionService.findMembers(code, pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(members);
+    public ResponseEntity<CompetitionMembersResponse> findAllCompetitionMembers(@PathVariable String code, Pageable pageable) {
+        CompetitionMembersResponse competitionMembersDTO = competitionService.findMembers(code, pageable);
+        return ResponseEntity.status(HttpStatus.FOUND).body(competitionMembersDTO);
     }
 
     //TODO:  Find Passed Competitions

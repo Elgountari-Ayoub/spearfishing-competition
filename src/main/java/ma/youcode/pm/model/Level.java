@@ -14,4 +14,5 @@ public class Level {
     private String description;
     private int points;
 
+
 }

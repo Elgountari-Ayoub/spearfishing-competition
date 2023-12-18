@@ -43,7 +43,6 @@ public class CompetitionDTO implements Serializable {
     @NotNull(message = "Amount is required")
     private Double amount;
 
-    @JsonManagedReference
     List<Ranking> rankings;
 
     public interface UpdateValidationGroup {}

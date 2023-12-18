@@ -14,5 +14,4 @@ import java.util.List;
 public interface IMemberRepository extends JpaRepository<Member, Long> {
     boolean existsByNum(Long num);
 
-    Page<Member> findMembersByCompetitionsContains(Competition competition, Pageable pageable);
 }

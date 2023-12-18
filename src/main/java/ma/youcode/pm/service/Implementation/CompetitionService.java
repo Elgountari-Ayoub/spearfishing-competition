@@ -1,7 +1,7 @@
 package ma.youcode.pm.service.Implementation;
 
 import ma.youcode.pm.dto.CompetitionDTO;
-import ma.youcode.pm.dto.MemberDTO;
+import ma.youcode.pm.dto.CompetitionMembersResponse;
 import ma.youcode.pm.dto.RankingDTO;
 import ma.youcode.pm.exception.*;
 import ma.youcode.pm.model.Competition;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompetitionService implements ICompetitionService {
@@ -54,10 +55,21 @@ public class CompetitionService implements ICompetitionService {
     }
 
     @Override
-    public Page<MemberDTO> findMembers(String code, Pageable pageable) {
+    public CompetitionMembersResponse findMembers(String code, Pageable pageable) {
         CompetitionDTO competitionDTO = findByCode(code);
-        Page<Member> members = memberRepository.findMembersByCompetitionsContains(modelMapper.map(competitionDTO, Competition.class), pageable);
-        return members.map(member -> modelMapper.map(member, MemberDTO.class));
+        Competition competition = modelMapper.map(competitionDTO, Competition.class);
+
+        Page<Ranking> rankings = rankingRepository.findByCompetition(competition, pageable);
+
+        List<Member> members = rankings.getContent().stream()
+                .map(Ranking::getMember)
+                .collect(Collectors.toList());
+
+        CompetitionMembersResponse competitionMembersResponse = new CompetitionMembersResponse();
+        competitionMembersResponse.setCompetition(competition);
+        competitionMembersResponse.setMembers(members);
+
+        return competitionMembersResponse;
     }
 
     @Override

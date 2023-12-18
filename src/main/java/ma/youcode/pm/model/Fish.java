@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import ma.youcode.pm.dto.HuntingDTO;
 import ma.youcode.pm.dto.RankingDTO;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -23,6 +25,9 @@ public class Fish {
     private Double averageWeight;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "level_code")
     private Level level;
+
+
 }

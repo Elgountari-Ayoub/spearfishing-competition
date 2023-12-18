@@ -3,6 +3,8 @@ package ma.youcode.pm.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Data
 @Entity
@@ -16,13 +18,16 @@ public class Hunting {
 
     @ManyToOne
     @JoinColumn(name = "member_num")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
     @ManyToOne
     @JoinColumn(name = "competition_code")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Competition competition;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "fish_id")
     private Fish fish;
 
