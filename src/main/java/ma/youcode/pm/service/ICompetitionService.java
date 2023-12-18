@@ -1,7 +1,7 @@
 package ma.youcode.pm.service;
 
 import ma.youcode.pm.dto.CompetitionDTO;
-import ma.youcode.pm.dto.CompetitionMembersResponse;
+import ma.youcode.pm.dto.CompetitionRankingsResponse;
 import ma.youcode.pm.dto.MemberDTO;
 import ma.youcode.pm.dto.RankingDTO;
 import org.springframework.data.domain.Page;
@@ -12,7 +12,7 @@ import java.util.List;
 public interface ICompetitionService {
     CompetitionDTO findByCode(String code);
     Page<CompetitionDTO> findAll(Pageable pageable);
-    CompetitionMembersResponse findMembers(String code, Pageable pageable);
+    CompetitionRankingsResponse findRankings(String code, Pageable pageable);
     Page<CompetitionDTO> findPassedCompetitions(Pageable pageable);
     CompetitionDTO findTodayCompetition();
     Page<CompetitionDTO> findUpcomingCompetitions(Pageable pageable);

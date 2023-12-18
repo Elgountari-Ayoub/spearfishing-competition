@@ -2,7 +2,7 @@ package ma.youcode.pm.controller;
 
 import jakarta.validation.Valid;
 import ma.youcode.pm.dto.CompetitionDTO;
-import ma.youcode.pm.dto.CompetitionMembersResponse;
+import ma.youcode.pm.dto.CompetitionRankingsResponse;
 import ma.youcode.pm.dto.RankingDTO;
 import ma.youcode.pm.service.Implementation.CompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +48,8 @@ public class CompetitionController {
 
     //TODO:  Find All Competitions Members
     @GetMapping("/{code}/members")
-    public ResponseEntity<CompetitionMembersResponse> findAllCompetitionMembers(@PathVariable String code, Pageable pageable) {
-        CompetitionMembersResponse competitionMembersDTO = competitionService.findMembers(code, pageable);
+    public ResponseEntity<CompetitionRankingsResponse> findCompetitionRankings(@PathVariable String code, Pageable pageable) {
+        CompetitionRankingsResponse competitionMembersDTO = competitionService.findRankings(code, pageable);
         return ResponseEntity.status(HttpStatus.FOUND).body(competitionMembersDTO);
     }
 

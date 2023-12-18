@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ma.youcode.pm.model.Competition;
 import ma.youcode.pm.model.Member;
-import ma.youcode.pm.model.Ranking;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompetitionMembersResponse implements Serializable {
-    Competition competition;
-    List<Member> members;
+public class MemberCompetitionsResponse implements Serializable {
+    Member member;
+    List<Competition> competitions;
 }

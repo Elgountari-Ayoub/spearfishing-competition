@@ -1,7 +1,7 @@
 package ma.youcode.pm.service.Implementation;
 
 import ma.youcode.pm.dto.CompetitionDTO;
-import ma.youcode.pm.dto.CompetitionMembersResponse;
+import ma.youcode.pm.dto.CompetitionRankingsResponse;
 import ma.youcode.pm.dto.RankingDTO;
 import ma.youcode.pm.exception.*;
 import ma.youcode.pm.model.Competition;
@@ -55,21 +55,17 @@ public class CompetitionService implements ICompetitionService {
     }
 
     @Override
-    public CompetitionMembersResponse findMembers(String code, Pageable pageable) {
+    public CompetitionRankingsResponse findRankings(String code, Pageable pageable) {
         CompetitionDTO competitionDTO = findByCode(code);
         Competition competition = modelMapper.map(competitionDTO, Competition.class);
 
         Page<Ranking> rankings = rankingRepository.findByCompetition(competition, pageable);
 
-        List<Member> members = rankings.getContent().stream()
-                .map(Ranking::getMember)
-                .collect(Collectors.toList());
+        CompetitionRankingsResponse competitionRankingsResponse = new CompetitionRankingsResponse();
+        competitionRankingsResponse.setCompetition(competition);
+        competitionRankingsResponse.setRankings(rankings);
 
-        CompetitionMembersResponse competitionMembersResponse = new CompetitionMembersResponse();
-        competitionMembersResponse.setCompetition(competition);
-        competitionMembersResponse.setMembers(members);
-
-        return competitionMembersResponse;
+        return competitionRankingsResponse;
     }
 
     @Override
