@@ -1,13 +1,11 @@
 package ma.youcode.pm.controller;
 
 import jakarta.validation.Valid;
-import ma.youcode.pm.dto.CompetitionRankingsResponse;
-import ma.youcode.pm.dto.MemberCompetitionsResponse;
 import ma.youcode.pm.dto.MemberDTO;
+import ma.youcode.pm.dto.MemberRankingsResponse;
 import ma.youcode.pm.service.Implementation.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,11 +48,11 @@ public class MemberController {
 
 
     //TODO:  Find All Member Competitions
-//    @GetMapping("/{num}/competitions")
-//    public ResponseEntity<MemberCompetitionsResponse> findAllMemberCompetitions(@PathVariable long num, Pageable pageable) {
-//        Mem competitionMembersDTO = memberService.findCompetitions(num, pageable);
-//        return ResponseEntity.status(HttpStatus.FOUND).body(competitionMembersDTO);
-//    }
+    @GetMapping("/{num}/competitions")
+    public ResponseEntity<MemberRankingsResponse> findAllMemberCompetitions(@PathVariable long num, Pageable pageable) {
+        MemberRankingsResponse memberRankingsResponse = memberService.findRankings(num, pageable);
+        return ResponseEntity.status(HttpStatus.FOUND).body(memberRankingsResponse);
+    }
 
     //TODO:  Update Member
     @PutMapping(value = "/{num}")

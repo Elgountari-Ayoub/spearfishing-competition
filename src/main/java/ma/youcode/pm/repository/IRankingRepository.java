@@ -15,8 +15,6 @@ import java.util.Optional;
 @Repository
 public interface IRankingRepository extends JpaRepository<Ranking, RankingId> {
     boolean existsRankingByCompetitionAndMember(Competition competition, Member member);
-//    List<Ranking> findAllOrderByScoreD
-//    Page<Ranking> findAllByOrderByScoreDesc(Pageable pageable);
     Page<Ranking> findAll(Pageable pageable);
     Page<Ranking> findByCompetition(Competition competition, Pageable pageable);
     Page<Ranking> findByMember(Member member, Pageable pageable);

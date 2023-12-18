@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ma.youcode.pm.model.Competition;
 import ma.youcode.pm.model.Member;
+import ma.youcode.pm.model.Ranking;
+import org.springframework.data.domain.Page;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberCompetitionsResponse implements Serializable {
+public class MemberRankingsResponse implements Serializable {
     Member member;
-    List<Competition> competitions;
+    Page<Ranking> rankings;
 }

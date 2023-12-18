@@ -1,10 +1,16 @@
 package ma.youcode.pm.service.Implementation;
 
+import ma.youcode.pm.dto.CompetitionDTO;
+import ma.youcode.pm.dto.CompetitionRankingsResponse;
 import ma.youcode.pm.dto.MemberDTO;
+import ma.youcode.pm.dto.MemberRankingsResponse;
 import ma.youcode.pm.exception.DuplicateMemberException;
 import ma.youcode.pm.exception.MemberNotFoundException;
+import ma.youcode.pm.model.Competition;
 import ma.youcode.pm.model.Member;
+import ma.youcode.pm.model.Ranking;
 import ma.youcode.pm.repository.IMemberRepository;
+import ma.youcode.pm.repository.IRankingRepository;
 import ma.youcode.pm.service.IMemberService;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,11 +27,13 @@ import java.util.Optional;
 @Service
 public class MemberService implements IMemberService {
     IMemberRepository memberRepository;
+    IRankingRepository rankingRepository;
 
     private ModelMapper modelMapper;
 
-    public MemberService(IMemberRepository memberRepository, ModelMapper modelMapper) {
+    public MemberService(IMemberRepository memberRepository, IRankingRepository rankingRepository, ModelMapper modelMapper) {
         this.memberRepository = memberRepository;
+        this.rankingRepository = rankingRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -41,6 +49,20 @@ public class MemberService implements IMemberService {
     public Page<MemberDTO> findAll(Pageable pageable) {
         Page<Member> members = memberRepository.findAll(pageable);
         return members.map(member -> modelMapper.map(member, MemberDTO.class));
+    }
+
+    @Override
+    public MemberRankingsResponse findRankings(long num, Pageable pageable) {
+        MemberDTO memberDTO = finByNum(num);
+        Member member = modelMapper.map(memberDTO, Member.class);
+
+        Page<Ranking> rankings = rankingRepository.findByMember(member, pageable);
+
+        MemberRankingsResponse memberRankingsResponse = new MemberRankingsResponse();
+        memberRankingsResponse.setMember(member);
+        memberRankingsResponse.setRankings(rankings);
+
+        return memberRankingsResponse;
     }
 
     @Override

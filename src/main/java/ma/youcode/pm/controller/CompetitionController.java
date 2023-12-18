@@ -46,7 +46,7 @@ public class CompetitionController {
         return ResponseEntity.status(HttpStatus.FOUND).body(competitions);
     }
 
-    //TODO:  Find All Competitions Members
+    //TODO:  Find All Competition Members
     @GetMapping("/{code}/members")
     public ResponseEntity<CompetitionRankingsResponse> findCompetitionRankings(@PathVariable String code, Pageable pageable) {
         CompetitionRankingsResponse competitionMembersDTO = competitionService.findRankings(code, pageable);
