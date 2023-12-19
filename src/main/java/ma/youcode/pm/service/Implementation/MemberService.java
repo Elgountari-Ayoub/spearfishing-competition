@@ -67,8 +67,8 @@ public class MemberService implements IMemberService {
 
     @Override
     public MemberDTO save(MemberDTO memberDTO) {
-        if (memberRepository.existsByNum(memberDTO.getNum())) {
-            throw new DuplicateMemberException("Member with num " + memberDTO.getNum() + " already exists.");
+        if (memberRepository.existsByIdentityNumber(memberDTO.getIdentityNumber())) {
+            throw new DuplicateMemberException("Member with Identity Number " + memberDTO.getIdentityNumber() + " already exists.");
         }
         Member member = modelMapper.map(memberDTO, Member.class);
         member = memberRepository.save(member);

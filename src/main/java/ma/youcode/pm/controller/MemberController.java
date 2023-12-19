@@ -35,7 +35,7 @@ public class MemberController {
     @GetMapping("/{num}")
     public ResponseEntity<MemberDTO> findByNum(@PathVariable long num) {
             MemberDTO memberDTO = memberService.finByNum(num);
-            return ResponseEntity.status(HttpStatus.FOUND).body(memberDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(memberDTO);
     }
 
     //TODO:  Find All Members
@@ -43,16 +43,14 @@ public class MemberController {
     public ResponseEntity<Page<MemberDTO>> findAll(Pageable pageable) {
         
         Page<MemberDTO> members = memberService.findAll(pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(members);
+        return ResponseEntity.status(HttpStatus.OK).body(members);
     }
-
-
 
     //TODO:  Find All Member Competitions
     @GetMapping("/{num}/competitions")
     public ResponseEntity<MemberRankingsResponse> findAllMemberCompetitions(@PathVariable long num, Pageable pageable) {
         MemberRankingsResponse memberRankingsResponse = memberService.findRankings(num, pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(memberRankingsResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(memberRankingsResponse);
     }
 
     //TODO:  Update Member

@@ -32,11 +32,7 @@ public class GlobalExceptionHandler {
 
             fieldErrors.put(fieldName, errorMessage);
         });
-        Map<String, Object> result = new HashMap<>();
-        result.put("message", "Validation failed");
-        result.put("errors", fieldErrors);
-
-        return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(fieldErrors, HttpStatus.BAD_REQUEST);
 
     }
 
@@ -48,13 +44,15 @@ public class GlobalExceptionHandler {
             DuplicateFishException.class
     })
     public ResponseEntity<?> handleDuplicateMemberException(Exception ex) {
-        Map<String, String> error = new HashMap<>();
-        error.put("message", ex.getMessage());
+//        Map<String, String> error = new HashMap<>();
+//        error.put("message", ex.getMessage());
+//
+//        Map<String, Object> result = new HashMap<>();
+//        result.put("error", error);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("error", error);
-
-        return new ResponseEntity<>(result, HttpStatus.CONFLICT);
+        Map<String, String> fieldErrors = new HashMap<>();
+        fieldErrors.put("error", ex.getMessage());
+        return new ResponseEntity<>(fieldErrors, HttpStatus.CONFLICT);
     }
 
     // Hadi for not found exception
@@ -68,12 +66,21 @@ public class GlobalExceptionHandler {
             HuntingNotFoundException.class
     })
     public ResponseEntity<?> handleMemberNotFoundException(Exception ex) {
-        Map<String, String> error = new HashMap<>();
-        error.put("message", ex.getMessage());
+//        Map<String, String> error = new HashMap<>();
+//        error.put("message", ex.getMessage());
+//
+//        Map<String, Object> result = new HashMap<>();
+//        result.put("error", error);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("error", error);
+//
+//        ex.getBindingResult().getFieldErrors().forEach(error -> {
+//            String fieldName = error.getField();
+//            String errorMessage = error.getDefaultMessage();
+//
+//        });
+        Map<String, String> fieldErrors = new HashMap<>();
+        fieldErrors.put("error", ex.getMessage());
 
-        return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(fieldErrors, HttpStatus.NOT_FOUND);
     }
 }

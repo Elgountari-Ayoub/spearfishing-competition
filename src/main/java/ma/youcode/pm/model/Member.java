@@ -19,7 +19,7 @@ import java.util.List;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
+//    @NotNull
     private Long num;
 
     private String name;

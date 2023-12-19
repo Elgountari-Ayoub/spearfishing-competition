@@ -14,8 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/competitions")
 @CrossOrigin(origins = "http://localhost:4200/")
+@RequestMapping("/api/v1/competitions")
 public class CompetitionController {
 
     CompetitionService competitionService;
@@ -37,42 +37,42 @@ public class CompetitionController {
     @GetMapping("/{code}")
     public ResponseEntity<CompetitionDTO> findByCode(@PathVariable String code) {
         CompetitionDTO competitionDTO = competitionService.findByCode(code);
-        return ResponseEntity.status(HttpStatus.FOUND).body(competitionDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(competitionDTO);
     }
 
     //TODO:  Find All Competitions
     @GetMapping
     public ResponseEntity<Page<CompetitionDTO>> findAllCompetitions(Pageable pageable) {
         Page<CompetitionDTO> competitions = competitionService.findAll(pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(competitions);
+        return ResponseEntity.status(HttpStatus.OK).body(competitions);
     }
 
     //TODO:  Find All Competition Members
     @GetMapping("/{code}/members")
     public ResponseEntity<CompetitionRankingsResponse> findCompetitionRankings(@PathVariable String code, Pageable pageable) {
         CompetitionRankingsResponse competitionMembersDTO = competitionService.findRankings(code, pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(competitionMembersDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(competitionMembersDTO);
     }
 
     //TODO:  Find Passed Competitions
     @GetMapping("/passed")
     public ResponseEntity<Page<CompetitionDTO>>  findPassedCompetitions(Pageable pageable) {
         Page<CompetitionDTO> competitionsDTO = competitionService.findPassedCompetitions(pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(competitionsDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(competitionsDTO);
     }
 
     //TODO:  Find Today Competition
     @GetMapping("/today")
     public ResponseEntity<CompetitionDTO> findTodayCompetition() {
         CompetitionDTO competitionDTO = competitionService.findTodayCompetition();
-        return ResponseEntity.status(HttpStatus.FOUND).body(competitionDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(competitionDTO);
     }
 
     //TODO:  Find Upcoming Competitions
     @GetMapping("/upcoming")
     public ResponseEntity<Page<CompetitionDTO>>  getUpcomingCompetitions(Pageable pageable) {
         Page<CompetitionDTO> competitionsDTO = competitionService.findUpcomingCompetitions(pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(competitionsDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(competitionsDTO);
     }
 
 

@@ -13,5 +13,6 @@ import java.util.List;
 @Repository
 public interface IMemberRepository extends JpaRepository<Member, Long> {
     boolean existsByNum(Long num);
+    boolean existsByIdentityNumber(String identityNumber);
 
 }

@@ -34,16 +34,15 @@ public class CompetitionDTO implements Serializable {
 
     @NotNull
     @Min(3)
-    @Max(30)
+    @Max(value = 30, message = "Number of participants must be less than or equal to 30")
     private int numberOfParticipants;
 
     @Size(min = 3, max = 255)
+    @NotBlank
     private String location;
 
     @NotNull(message = "Amount is required")
     private Double amount;
-
-    List<Ranking> rankings;
 
     public interface UpdateValidationGroup {}
 }

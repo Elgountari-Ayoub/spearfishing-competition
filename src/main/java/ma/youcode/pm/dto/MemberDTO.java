@@ -28,7 +28,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MemberDTO implements Serializable {
 
-    @NotNull(message = "num is required")
+//    @NotNull(message = "num is required")
     private Long num;
 
     @NotBlank(message = "name is required")
