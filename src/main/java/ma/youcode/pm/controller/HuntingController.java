@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/huntings")
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "*")
 public class HuntingController {
 
     HuntingService huntingService;
@@ -36,7 +36,7 @@ public class HuntingController {
     public ResponseEntity<HuntingDTO> findByNum(
             @PathVariable long id) {
         HuntingDTO huntingDTO = huntingService.findById(id);
-        return ResponseEntity.status(HttpStatus.FOUND).body(huntingDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(huntingDTO);
     }
 
     //TODO:  Find All Huntings
@@ -44,7 +44,17 @@ public class HuntingController {
     public ResponseEntity<Page<HuntingDTO>> findAll(Pageable pageable) {
         
         Page<HuntingDTO> huntings = huntingService.findAll(pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(huntings);
+        return ResponseEntity.status(HttpStatus.OK).body(huntings);
+    }    
+    
+    //TODO:  Find Huntings By Competition
+    @GetMapping(value = "/{code}/competition")
+    public ResponseEntity<Page<HuntingDTO>> findByCompetition(
+            @PathVariable String code,
+            Pageable pageable) {
+
+        Page<HuntingDTO> huntings = huntingService.findByCompetition(code, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(huntings);
     }
 
     //TODO:  Update Hunting

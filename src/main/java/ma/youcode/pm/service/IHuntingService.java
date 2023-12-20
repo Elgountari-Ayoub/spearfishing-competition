@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface IHuntingService {
     HuntingDTO findById(long id);
-
     Page<HuntingDTO> findAll(Pageable pageable);
+    Page<HuntingDTO> findByCompetition(String code, Pageable pageable);
     HuntingDTO save(HuntingDTO HuntingDTO);
 
     HuntingDTO update(long id, HuntingDTO huntingDTO);

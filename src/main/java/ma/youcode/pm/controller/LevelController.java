@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/levels")
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "*")
 public class LevelController {
 
     LevelService levelService;
@@ -35,7 +35,7 @@ public class LevelController {
     @GetMapping("/{code}")
     public ResponseEntity<LevelDTO> findByCode(@PathVariable long code) {
             LevelDTO levelDTO = levelService.findById(code);
-            return ResponseEntity.status(HttpStatus.FOUND).body(levelDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(levelDTO);
     }
 
     //TODO:  Find All Levels
@@ -43,7 +43,7 @@ public class LevelController {
     public ResponseEntity<Page<LevelDTO>> findAll(Pageable pageable) {
         
         Page<LevelDTO> levels = levelService.findAll(pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(levels);
+        return ResponseEntity.status(HttpStatus.OK).body(levels);
     }
 
     //TODO:  Update Level

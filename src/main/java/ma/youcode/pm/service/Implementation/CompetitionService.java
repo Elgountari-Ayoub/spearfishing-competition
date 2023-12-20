@@ -94,7 +94,7 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public CompetitionDTO save(CompetitionDTO competitionDTO) {
-        competitionDTO.setCode(competitionCodeGenerator.generate(competitionDTO.getLocation(), competitionDTO.getDate()));
+        competitionDTO.setCode(competitionCodeGenerator.generate(competitionDTO.getLocation().trim(), competitionDTO.getDate()).trim());
         if (competitionRepository.existsByCode(competitionDTO.getCode())) {
             throw new DuplicateCompetitionException("Competition with code " + competitionDTO.getCode() + " already exists.");
         } else if (competitionRepository.existsByDate(competitionDTO.getDate())) {
@@ -146,7 +146,7 @@ public class CompetitionService implements ICompetitionService {
         if (daysDifference <= -1) {
             throw new RegistrationException("Competition already passed");
         } else if (daysDifference <= 1) {
-            throw new RegistrationException("Registration closed. It's less than 24 hours before the competition.");
+//            throw new RegistrationException("Registration closed. It's less than 24 hours before the competition.");
         }
 
         if (rankingRepository.existsRankingByCompetitionAndMember(competition, member)) {

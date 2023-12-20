@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 public class FishDTO implements Serializable {
 
-    @NotNull(message = "Code is required")
+//    @NotNull(message = "id is required")
     private long id;
 
     @NotBlank(message = "Name is required")

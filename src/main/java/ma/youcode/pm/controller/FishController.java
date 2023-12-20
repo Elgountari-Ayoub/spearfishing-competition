@@ -15,9 +15,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/fishes")
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "*")
 public class FishController {
-
     FishService fishService;
 
     @Autowired
@@ -37,7 +36,7 @@ public class FishController {
     @GetMapping("/{id}")
     public ResponseEntity<FishDTO> findByCode(@PathVariable long id) {
         FishDTO fishDTO = fishService.findById(id);
-        return ResponseEntity.status(HttpStatus.FOUND).body(fishDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(fishDTO);
     }
 
     //TODO: Search Fish by Name
@@ -51,7 +50,7 @@ public class FishController {
     @GetMapping
     public ResponseEntity<Page<FishDTO>> findAll(Pageable pageable) {
         Page<FishDTO> levels = fishService.findAll(pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(levels);
+        return ResponseEntity.status(HttpStatus.OK).body(levels);
     }
 
     //TODO:  Update Fish

@@ -20,8 +20,6 @@ import java.util.List;
 
 @Service
 public class HuntingService implements IHuntingService {
-
-
     IHuntingRepository huntingRepository;
     MemberService memberService;
     CompetitionService competitionService;
@@ -29,7 +27,6 @@ public class HuntingService implements IHuntingService {
     FishService fishService;
     LevelService levelService;
     IRankingRepository rankingRepository;
-
 
     private final ModelMapper modelMapper;
 
@@ -60,6 +57,14 @@ public class HuntingService implements IHuntingService {
     @Override
     public Page<HuntingDTO> findAll(Pageable pageable) {
         Page<Hunting> huntings = huntingRepository.findAll(pageable);
+        return huntings.map(hunting -> modelMapper.map(hunting, HuntingDTO.class));
+    }
+
+    @Override
+    public Page<HuntingDTO> findByCompetition(String code, Pageable pageable) {
+        CompetitionDTO competitionDTO = competitionService.findByCode(code);
+        Competition competition = modelMapper.map(competitionDTO, Competition.class);
+        Page<Hunting> huntings = huntingRepository.findByCompetition(competition, pageable);
         return huntings.map(hunting -> modelMapper.map(hunting, HuntingDTO.class));
     }
 

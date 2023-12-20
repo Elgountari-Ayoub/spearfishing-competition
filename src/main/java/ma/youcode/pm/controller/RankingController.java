@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/rankings")
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "*")
 public class RankingController {
 
     RankingService rankingService;
@@ -46,7 +46,7 @@ public class RankingController {
         rankingId.setMemberNum(memberNum);
         rankingId.setCompetitionCode(competitionCode);
         RankingDTO rankingDTO = rankingService.findById(rankingId);
-        return ResponseEntity.status(HttpStatus.FOUND).body(rankingDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(rankingDTO);
     }
 
     //TODO:  Find All Rankings
@@ -54,7 +54,7 @@ public class RankingController {
     public ResponseEntity<Page<RankingDTO>> findAll(Pageable pageable) {
 
         Page<RankingDTO> rankings = rankingService.findAll(pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(rankings);
+        return ResponseEntity.status(HttpStatus.OK).body(rankings);
     }
 
     //TODO:  Update Ranking
