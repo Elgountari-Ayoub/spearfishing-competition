@@ -38,7 +38,7 @@ public class RankingService implements IRankingService {
     @Override
     public RankingDTO findById(RankingId rankingId) {
         Ranking ranking = rankingRepository.findById(rankingId)
-                .orElseThrow(() -> new RankingNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode() + ", and member number: " + rankingId.getMemberNum()));
+                .orElseThrow(() -> new RankingNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode() + ", and member number: " + rankingId.getMemberId()));
         return modelMapper.map(ranking, RankingDTO.class);
     }
 
@@ -50,7 +50,7 @@ public class RankingService implements IRankingService {
 
     @Override
     public RankingDTO save(RankingDTO rankingDTO) {
-        Member member = memberRepository.findById(rankingDTO.getId().getMemberNum())
+        Member member = memberRepository.findById(rankingDTO.getId().getMemberId())
                 .orElseThrow(() -> new MemberNotFoundException("Member not found"));
 
         Competition competition = competitionRepository.findById(rankingDTO.getId().getCompetitionCode())
@@ -84,7 +84,7 @@ public class RankingService implements IRankingService {
     @Override
     public RankingDTO update(RankingId rankingId, RankingDTO rankingDTO) {
         Ranking ranking = rankingRepository.findById(rankingId)
-                .orElseThrow(() -> new RankingNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode() + ", and member number: " + rankingId.getMemberNum()));
+                .orElseThrow(() -> new RankingNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode() + ", and member number: " + rankingId.getMemberId()));
 
         ranking.setScore(rankingDTO.getScore());
         rankingRepository.save(ranking);
@@ -96,7 +96,7 @@ public class RankingService implements IRankingService {
     @Override
     public void delete(RankingId rankingId) {
         Ranking ranking = rankingRepository.findById(rankingId)
-                .orElseThrow(() -> new RankingNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode() + ", and member number: " + rankingId.getMemberNum()));
+                .orElseThrow(() -> new RankingNotFoundException("Ranking not found with competition code: " + rankingId.getCompetitionCode() + ", and member number: " + rankingId.getMemberId()));
 
         rankingRepository.delete(ranking);
     }

@@ -8,10 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.AssertTrue;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ma.youcode.pm.enums.IdentityDocumentType;
 import ma.youcode.pm.model.Competition;
 import ma.youcode.pm.model.Hunting;
@@ -22,17 +19,12 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberDTO implements Serializable {
-
-//    @NotNull(message = "num is required")
-    private Long num;
-
-    @NotBlank(message = "name is required")
-    private String name;
+public class MemberDTO extends UserDTO implements Serializable {
 
     @NotBlank(message = "family Name is required")
     private String familyName;
@@ -55,7 +47,6 @@ public class MemberDTO implements Serializable {
                         identityDocument == IdentityDocumentType.CARTE_RESIDENCE ||
                         identityDocument == IdentityDocumentType.PASSPORT);
     }
-
 
     private List<Ranking> rankings;
     private List<Competition> competitions;

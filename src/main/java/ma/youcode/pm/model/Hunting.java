@@ -17,7 +17,7 @@ public class Hunting {
     private int numberOfFish;
 
     @ManyToOne
-    @JoinColumn(name = "member_num")
+    @JoinColumn(name = "member_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 

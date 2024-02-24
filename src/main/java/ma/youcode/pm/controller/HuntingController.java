@@ -33,7 +33,7 @@ public class HuntingController {
 
     //TODO:  Find Hunting By id
     @GetMapping("/{id}")
-    public ResponseEntity<HuntingDTO> findByNum(
+    public ResponseEntity<HuntingDTO> findById(
             @PathVariable long id) {
         HuntingDTO huntingDTO = huntingService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(huntingDTO);

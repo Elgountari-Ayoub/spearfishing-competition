@@ -16,8 +16,8 @@ public class Ranking {
     private int score;
 
     @ManyToOne
-    @MapsId("memberNum")
-    @JoinColumn(name = "member_num", referencedColumnName = "num")
+    @MapsId("memberId")
+    @JoinColumn(name = "member_id", referencedColumnName = "id")
     private Member member;
 
     @ManyToOne

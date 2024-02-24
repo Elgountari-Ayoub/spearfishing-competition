@@ -55,7 +55,7 @@ class HuntingControllerTest {
         huntingDTO.setFish(fish);
 
         Member member = new Member();
-        member.setNum(1L);
+        member.setId(1L);
 
         Competition competition = new Competition();
         competition.setCode("ess-20-12-23");

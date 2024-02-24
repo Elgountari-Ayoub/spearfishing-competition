@@ -38,9 +38,9 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public MemberDTO finByNum(long num) {
-        Member member = memberRepository.findById(num)
-                .orElseThrow(() -> new MemberNotFoundException("Member not found with num: " + num));
+    public MemberDTO findById(long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new MemberNotFoundException("Member not found with id: " + id));
 
         return modelMapper.map(member, MemberDTO.class);
     }
@@ -52,8 +52,8 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public MemberRankingsResponse findRankings(long num, Pageable pageable) {
-        MemberDTO memberDTO = finByNum(num);
+    public MemberRankingsResponse findRankings(long id, Pageable pageable) {
+        MemberDTO memberDTO = findById(id);
         Member member = modelMapper.map(memberDTO, Member.class);
 
         Page<Ranking> rankings = rankingRepository.findByMember(member, pageable);
@@ -76,9 +76,9 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public MemberDTO update(long num, MemberDTO memberDTO) {
-        Member existingMember = memberRepository.findById(num)
-                .orElseThrow(() -> new MemberNotFoundException("Member not found with num: " + num));
+    public MemberDTO update(long id, MemberDTO memberDTO) {
+        Member existingMember = memberRepository.findById(id)
+                .orElseThrow(() -> new MemberNotFoundException("Member not found with id: " + id));
 
         existingMember.setName(memberDTO.getName());
         existingMember.setFamilyName(memberDTO.getFamilyName());
@@ -93,9 +93,9 @@ public class MemberService implements IMemberService {
 
 
     @Override
-    public void delete(long num) {
-        Member member = memberRepository.findById(num)
-                .orElseThrow(() -> new MemberNotFoundException("Member not found with num: " + num));
+    public void delete(long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new MemberNotFoundException("Member not found with id: " + id));
         memberRepository.delete(member);
     }
 

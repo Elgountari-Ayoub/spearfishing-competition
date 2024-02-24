@@ -38,12 +38,12 @@ public class RankingController {
     }
 
     //TODO:  Find Ranking By RankingId
-    @GetMapping("/{memberNum}/{competitionCode}")
-    public ResponseEntity<RankingDTO> findByNum(
-            @PathVariable long memberNum,
+    @GetMapping("/{memberId}/{competitionCode}")
+    public ResponseEntity<RankingDTO> findById(
+            @PathVariable long memberId,
             @PathVariable String competitionCode) {
         RankingId rankingId = new RankingId();
-        rankingId.setMemberNum(memberNum);
+        rankingId.setMemberId(memberId);
         rankingId.setCompetitionCode(competitionCode);
         RankingDTO rankingDTO = rankingService.findById(rankingId);
         return ResponseEntity.status(HttpStatus.OK).body(rankingDTO);
@@ -58,10 +58,10 @@ public class RankingController {
     }
 
     //TODO:  Update Ranking
-    @PutMapping(value = "/{memberNum}/{competitionCode}")
-    public ResponseEntity<RankingDTO> update(@PathVariable long memberNum, @PathVariable String competitionCode, @Valid @RequestBody RankingDTO rankingDTO) {
+    @PutMapping(value = "/{memberId}/{competitionCode}")
+    public ResponseEntity<RankingDTO> update(@PathVariable long memberId, @PathVariable String competitionCode, @Valid @RequestBody RankingDTO rankingDTO) {
         RankingId rankingId = new RankingId();
-        rankingId.setMemberNum(memberNum);
+        rankingId.setMemberId(memberId);
         rankingId.setCompetitionCode(competitionCode);
         RankingDTO updatedRanking = rankingService.update(rankingId, rankingDTO);
         return ResponseEntity.ok(updatedRanking);
@@ -69,10 +69,10 @@ public class RankingController {
     }
 
     //TODO:  Delete Ranking
-    @DeleteMapping(value = "/{memberNum}/{competitionCode}")
-    public ResponseEntity<RankingDTO> delete(@PathVariable long memberNum, @PathVariable String competitionCode) {
+    @DeleteMapping(value = "/{memberId}/{competitionCode}")
+    public ResponseEntity<RankingDTO> delete(@PathVariable long memberId, @PathVariable String competitionCode) {
         RankingId rankingId = new RankingId();
-        rankingId.setMemberNum(memberNum);
+        rankingId.setMemberId(memberId);
         rankingId.setCompetitionCode(competitionCode);
         rankingService.delete(rankingId);
         return ResponseEntity.noContent().build();

@@ -10,11 +10,11 @@ import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 
 public interface IMemberService {
-    MemberDTO finByNum(long num);
+    MemberDTO findById(long id);
     Page<MemberDTO> findAll(Pageable pageable);
-    MemberRankingsResponse findRankings(long num, Pageable pageable);
+    MemberRankingsResponse findRankings(long id, Pageable pageable);
     MemberDTO save(MemberDTO memberDTO);
-    MemberDTO update(long num, MemberDTO memberDTO);
-    void delete(long num);
+    MemberDTO update(long id, MemberDTO memberDTO);
+    void delete(long id);
 
 }

@@ -31,10 +31,10 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMember);
     }
 
-    //TODO:  Find Member By Num
-    @GetMapping("/{num}")
-    public ResponseEntity<MemberDTO> findByNum(@PathVariable long num) {
-            MemberDTO memberDTO = memberService.finByNum(num);
+    //TODO:  Find Member By Id
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberDTO> findById(@PathVariable long id) {
+            MemberDTO memberDTO = memberService.findById(id);
             return ResponseEntity.status(HttpStatus.OK).body(memberDTO);
     }
 
@@ -47,24 +47,24 @@ public class MemberController {
     }
 
     //TODO:  Find All Member Competitions
-    @GetMapping("/{num}/competitions")
-    public ResponseEntity<MemberRankingsResponse> findAllMemberCompetitions(@PathVariable long num, Pageable pageable) {
-        MemberRankingsResponse memberRankingsResponse = memberService.findRankings(num, pageable);
+    @GetMapping("/{id}/competitions")
+    public ResponseEntity<MemberRankingsResponse> findAllMemberCompetitions(@PathVariable long id, Pageable pageable) {
+        MemberRankingsResponse memberRankingsResponse = memberService.findRankings(id, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(memberRankingsResponse);
     }
 
     //TODO:  Update Member
-    @PutMapping(value = "/{num}")
-    public ResponseEntity<MemberDTO> update(@PathVariable long num, @Valid @RequestBody MemberDTO memberDTO) {
-        MemberDTO updatedMember = memberService.update(num, memberDTO);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<MemberDTO> update(@PathVariable long id, @Valid @RequestBody MemberDTO memberDTO) {
+        MemberDTO updatedMember = memberService.update(id, memberDTO);
         return ResponseEntity.ok(updatedMember);
 
     }
 
     //TODO:  Delete Member
-    @DeleteMapping(value = "/{num}")
-    public ResponseEntity<MemberDTO> delete(@PathVariable long num) {
-        memberService.delete(num);
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<MemberDTO> delete(@PathVariable long id) {
+        memberService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

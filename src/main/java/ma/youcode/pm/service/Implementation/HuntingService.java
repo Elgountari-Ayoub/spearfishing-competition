@@ -72,7 +72,7 @@ public class HuntingService implements IHuntingService {
     public HuntingDTO save(HuntingDTO huntingDTO) {
         RankingId rankingId = new RankingId();
         rankingId.setCompetitionCode(huntingDTO.getCompetition().getCode());
-        rankingId.setMemberNum(huntingDTO.getMember().getNum());
+        rankingId.setMemberId(huntingDTO.getMember().getId());
         RankingDTO rankingDTO = rankingService.findById(rankingId);
 
         LocalDate today = LocalDate.now();
@@ -114,7 +114,7 @@ public class HuntingService implements IHuntingService {
     public HuntingDTO update(long id, HuntingDTO huntingDTO) {
         RankingId rankingId = new RankingId();
         rankingId.setCompetitionCode(huntingDTO.getCompetition().getCode());
-        rankingId.setMemberNum(huntingDTO.getMember().getNum());
+        rankingId.setMemberId(huntingDTO.getMember().getId());
 
         RankingDTO rankingDTO = rankingService.findById(rankingId);
 

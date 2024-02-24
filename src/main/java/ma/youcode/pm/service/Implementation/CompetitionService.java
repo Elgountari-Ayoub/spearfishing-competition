@@ -133,7 +133,7 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public CompetitionDTO join(RankingDTO rankingDTO) {
-        Member member = memberRepository.findById(rankingDTO.getId().getMemberNum())
+        Member member = memberRepository.findById(rankingDTO.getId().getMemberId())
                 .orElseThrow(() -> new MemberNotFoundException("Member not found"));
 
         Competition competition = competitionRepository.findById(rankingDTO.getId().getCompetitionCode())

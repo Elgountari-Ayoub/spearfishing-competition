@@ -1,6 +1,7 @@
 package ma.youcode.pm.controller;
 
 import jakarta.validation.Valid;
+import ma.youcode.pm.dto.CompetitionDTO;
 import ma.youcode.pm.dto.LevelDTO;
 import ma.youcode.pm.service.Implementation.LevelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -48,7 +50,7 @@ public class LevelController {
 
     //TODO:  Update Level
     @PutMapping(value = "/{code}")
-    public ResponseEntity<LevelDTO> update(@PathVariable long code, @Valid @RequestBody LevelDTO levelDTO) {
+    public ResponseEntity<LevelDTO> update(@PathVariable @Validated(CompetitionDTO.UpdateValidationGroup.class) long code, @Valid @RequestBody LevelDTO levelDTO) {
         LevelDTO updatedLevel = levelService.update(code, levelDTO);
         return ResponseEntity.ok(updatedLevel);
 

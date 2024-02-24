@@ -5,14 +5,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import ma.youcode.pm.dto.HuntingDTO;
-import ma.youcode.pm.enums.IdentityDocumentType;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @Entity

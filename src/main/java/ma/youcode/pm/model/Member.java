@@ -16,13 +16,12 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "members")
-public class Member {
+public class Member extends User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @NotNull
-    private Long num;
+    private Long id;
 
-    private String name;
     private String familyName;
     private LocalDate accessionDate;
     private String nationality;

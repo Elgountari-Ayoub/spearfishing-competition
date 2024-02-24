@@ -14,7 +14,7 @@ import java.util.Date;
 @Embeddable
 public class RankingId implements Serializable {
     @NotNull(groups = RankingDTO.SaveValidationGroup.class)
-    private Long memberNum;
+    private Long memberId;
 
     @NotNull(groups = RankingDTO.SaveValidationGroup.class)
     private String competitionCode;

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface IMemberRepository extends JpaRepository<Member, Long> {
-    boolean existsByNum(Long num);
+//    boolean existsById(Long id);
     boolean existsByIdentityNumber(String identityNumber);
 
 }

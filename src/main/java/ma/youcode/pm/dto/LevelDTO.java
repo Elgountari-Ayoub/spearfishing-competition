@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class LevelDTO {
-    @NotNull(message = "Code is required")
+//    @NotNull(message = "Code is required")
+    @NotNull(groups = SaveValidationGroup.class, message = "Code is required")
     private Long code;
 
     @NotBlank(message = "Description is required")
@@ -23,4 +24,5 @@ public class LevelDTO {
     @Positive(message = "Points must be a non-negative integer")
     private int points;
 
+    public interface SaveValidationGroup{ }
 }
