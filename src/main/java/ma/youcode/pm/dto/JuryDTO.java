@@ -15,9 +15,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class JuryDTO extends UserDTO implements Serializable {
 }

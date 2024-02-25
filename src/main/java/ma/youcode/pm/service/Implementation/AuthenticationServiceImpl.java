@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import ma.youcode.pm.dao.request.SignUpRequest;
 import ma.youcode.pm.dao.request.SigninRequest;
 import ma.youcode.pm.dao.response.JwtAuthenticationResponse;
+import ma.youcode.pm.model.Member;
 import ma.youcode.pm.model.User;
+import ma.youcode.pm.repository.IMemberRepository;
 import ma.youcode.pm.repository.UserRepository;
 import ma.youcode.pm.service.AuthenticationService;
 import ma.youcode.pm.service.JwtService;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
-//    private final IJobSeekerRepository jobSeekerRepository;
+    private final IMemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -31,6 +33,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .role(request.getRole()).build();
 //        JobSeeker jobSeeker = modelMapper.map(user, JobSeeker.class);
 //        jobSeekerRepository.save(jobSeeker);
+        Member member = modelMapper.map(user, Member.class);
+        memberRepository.save(member);
 
         var jwt = jwtService.generateToken(user);
         System.out.println(jwt);

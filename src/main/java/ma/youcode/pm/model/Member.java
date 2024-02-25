@@ -28,6 +28,6 @@ public class Member extends User{
 
     @Enumerated(EnumType.STRING)
     private IdentityDocumentType identityDocument;
-    @Column(name = "identity_number", unique = true, nullable = false)
+    @Column(name = "identity_number", unique = true, nullable = true)
     private String identityNumber;
 }
