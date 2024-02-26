@@ -25,7 +25,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDTO extends UserDTO implements Serializable {
-
     @NotBlank(message = "family Name is required")
     private String familyName;
 
@@ -41,7 +40,7 @@ public class MemberDTO extends UserDTO implements Serializable {
     private IdentityDocumentType identityDocument;
 
     @AssertTrue
-    private boolean isValidIdentityDocument() {
+    private boolean isAcceptedIdentityDocument() {
         return identityDocument != null &&
                 (identityDocument == IdentityDocumentType.CIN ||
                         identityDocument == IdentityDocumentType.CARTE_RESIDENCE ||

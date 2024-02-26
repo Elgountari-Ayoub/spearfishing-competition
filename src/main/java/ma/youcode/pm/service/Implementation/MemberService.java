@@ -9,15 +9,18 @@ import ma.youcode.pm.exception.MemberNotFoundException;
 import ma.youcode.pm.model.Competition;
 import ma.youcode.pm.model.Member;
 import ma.youcode.pm.model.Ranking;
+import ma.youcode.pm.model.User;
 import ma.youcode.pm.repository.IMemberRepository;
 import ma.youcode.pm.repository.IRankingRepository;
 import ma.youcode.pm.service.IMemberService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,6 +31,9 @@ import java.util.Optional;
 public class MemberService implements IMemberService {
     IMemberRepository memberRepository;
     IRankingRepository rankingRepository;
+
+    @Autowired
+    private  PasswordEncoder passwordEncoder;
 
     private ModelMapper modelMapper;
 
@@ -67,11 +73,23 @@ public class MemberService implements IMemberService {
 
     @Override
     public MemberDTO save(MemberDTO memberDTO) {
-        if (memberRepository.existsByIdentityNumber(memberDTO.getIdentityNumber().trim())) {
+            if (memberRepository.existsByIdentityNumber(memberDTO.getIdentityNumber().trim())) {
             throw new DuplicateMemberException("Member with Identity Number " + memberDTO.getIdentityNumber() + " already exists.");
         }
-        Member member = modelMapper.map(memberDTO, Member.class);
+
+        var user = User.builder().name(memberDTO.getName())
+                .email(memberDTO.getEmail()).password(passwordEncoder.encode(memberDTO.getPassword()))
+                .role(memberDTO.getRole()).build();
+
+        Member member = modelMapper.map(user, Member.class);
+        member.setFamilyName(memberDTO.getFamilyName());
+        member.setNationality(memberDTO.getNationality());
+        member.setIdentityNumber(memberDTO.getIdentityNumber());
+        member.setIdentityDocument(memberDTO.getIdentityDocument());
+        member.setIsAccepted(memberDTO.getIsAccepted());
+
         member = memberRepository.save(member);
+
         return modelMapper.map(member, MemberDTO.class);
     }
 
@@ -98,6 +116,7 @@ public class MemberService implements IMemberService {
                 .orElseThrow(() -> new MemberNotFoundException("Member not found with id: " + id));
         memberRepository.delete(member);
     }
+
 
     //    HELPER METHODS
 

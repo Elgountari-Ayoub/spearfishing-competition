@@ -37,6 +37,8 @@ public class User implements UserDetails {
 //    @Column(name = "role", insertable = false, updatable = false)
     protected String role;
 
+    private Boolean isAccepted = false;
+
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    private List<Resume> resumes;
     @Override

@@ -14,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200/")
 //@CrossOrigin(origins = "http://localhost:4200/")
 @RequestMapping("/api/v1/competitions")
 public class CompetitionController {
@@ -75,8 +75,6 @@ public class CompetitionController {
         Page<CompetitionDTO> competitionsDTO = competitionService.findUpcomingCompetitions(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(competitionsDTO);
     }
-
-
     //TODO:  Update Competition
     @PutMapping(value = "/{code}")
     public ResponseEntity<CompetitionDTO> update(

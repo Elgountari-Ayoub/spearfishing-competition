@@ -17,10 +17,6 @@ import java.util.List;
 @Entity
 @Table(name = "members")
 public class Member extends User{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @NotNull
-    private Long id;
 
     private String familyName;
     private LocalDate accessionDate;

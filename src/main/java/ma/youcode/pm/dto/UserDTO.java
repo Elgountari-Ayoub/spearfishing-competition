@@ -16,4 +16,7 @@ public class UserDTO {
     @NotBlank(message = "name is required")
     protected String name;
     protected String role;
+
+    private Boolean isAccepted = false;
+
 }
