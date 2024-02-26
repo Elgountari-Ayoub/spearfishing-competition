@@ -11,4 +11,5 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     UserDetailsService userDetailsService();
     Page<UserDTO> findUsers(Pageable pageable);
+    UserDTO findById(int id);
 }

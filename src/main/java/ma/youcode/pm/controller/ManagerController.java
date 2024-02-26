@@ -27,19 +27,22 @@ public class ManagerController {
     @Autowired
     IMemberService memberService;
     @Autowired
-
     UserService userService;
 
     @GetMapping("/users")
     public ResponseEntity<Page<?>> findAll(Pageable pageable) {
-
         Page<UserDTO> users = userService.findUsers(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(users);
+    }    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
+
+        UserDTO user = userService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @PutMapping("/validate")
-    public ResponseEntity<Boolean> validate(long id) {
-        boolean isAccepted = managerService.validate(id);
+    public ResponseEntity<Boolean> validate(@RequestBody UserDTO userDTO) {
+        boolean isAccepted = managerService.validate(userDTO.getId());
         return ResponseEntity.status(HttpStatus.OK).body(isAccepted);
     }
 

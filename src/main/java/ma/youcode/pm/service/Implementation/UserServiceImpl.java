@@ -16,12 +16,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     @Autowired
     ModelMapper modelMapper;
     private final UserRepository userRepository;
+
     @Override
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
@@ -38,5 +41,13 @@ public class UserServiceImpl implements UserService {
         var users = userRepository.findAll(pageable);
         return users.map(user -> modelMapper.map(user, UserDTO.class));
 
+    }
+
+    @Override
+    public UserDTO findById(int id) {
+        var user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("user not found"));
+
+        return modelMapper.map(user, UserDTO.class);
     }
 }
